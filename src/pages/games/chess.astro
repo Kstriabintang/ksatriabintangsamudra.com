@@ -51,6 +51,7 @@ import '../../styles/pages/_chess.scss';
 
   <script>
     import { Chess } from 'chess.js';
+    import type { Square } from 'chess.js';
 
     const GLYPH: Record<string, string> = { p: '♟', n: '♞', b: '♝', r: '♜', q: '♛', k: '♚' };
     const VAL: Record<string, number> = { p: 100, n: 320, b: 330, r: 500, q: 900, k: 20000 };
@@ -64,7 +65,6 @@ import '../../styles/pages/_chess.scss';
       k: [-30,-40,-40,-50,-50,-40,-40,-30, -30,-40,-40,-50,-50,-40,-40,-30, -30,-40,-40,-50,-50,-40,-40,-30, -30,-40,-40,-50,-50,-40,-40,-30, -20,-30,-30,-40,-40,-30,-30,-20, -10,-20,-20,-20,-20,-20,-20,-10, 20,20,0,0,0,0,20,20, 20,30,10,0,0,10,30,20],
     };
     const FILES = ['a','b','c','d','e','f','g','h'];
-    const idxOf = (sq: string) => { const f = FILES.indexOf(sq[0]); const r = 8 - parseInt(sq[1], 10); return r * 8 + f; };
 
     const game = new Chess();
     const boardEl = document.querySelector('[data-board]') as HTMLElement;
@@ -127,9 +127,9 @@ import '../../styles/pages/_chess.scss';
 
     function onTap(sq: string) {
       if (busy || game.isGameOver() || game.turn() !== 'w') return;
-      const piece = game.get(sq);
+      const piece = game.get(sq as Square);
       if (selected && targets.includes(sq)) {
-        game.move({ from: selected, to: sq, promotion: 'q' });
+        game.move({ from: selected as Square, to: sq as Square, promotion: 'q' });
         selected = null; targets = [];
         render(); updateStatus();
         if (!finishIfOver()) aiTurn();
@@ -137,7 +137,7 @@ import '../../styles/pages/_chess.scss';
       }
       if (piece && piece.color === 'w') {
         selected = sq;
-        targets = game.moves({ square: sq, verbose: true }).map((m: any) => m.to);
+        targets = game.moves({ square: sq as Square, verbose: true }).map((m: any) => m.to);
       } else { selected = null; targets = []; }
       render();
     }

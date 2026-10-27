@@ -53,3 +53,27 @@ coverage/
 .dev.vars
 .playwright-mcp/
 .cf-token-ksatria.txt
+
+# Legacy React/Vite scaffold (predates the Astro rebuild) — archived locally,
+# kept out of the repo. See _legacy-react/README.md. Archived by Kiro (Kiro CLI).
+_legacy-react/
+vite.config.ts
+tsconfig.app.json
+tsconfig.node.json
+components.json
+cv-template.html
+info.md
+# disabled Tailwind/PostCSS configs from the React era (site uses SCSS, not Tailwind)
+postcss.config.js
+tailwind.config.js
+postcss.config.js.disabled
+tailwind.config.js.disabled
+_postcss.config.js.off
+_tailwind.config.js.off
+
+# Stale GitHub-Pages CNAME + hand-written sitemap pointing at the retired .my.id
+# domain. Astro generates the correct .com sitemap-index.xml at build. Kept out
+# of the repo so they don't feed search engines the wrong URLs.
+/CNAME
+/public/CNAME
+/public/sitemap.xml

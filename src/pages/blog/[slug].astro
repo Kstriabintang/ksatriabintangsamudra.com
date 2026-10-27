@@ -20,7 +20,7 @@ const related = all.filter((p) => postSlug(p) !== postSlug(post)).slice(0, 2);
 
 const url = new URL(`/blog/${postSlug(post)}/`, site.url).toString();
 const coverAbs = post.data.cover ? new URL(post.data.cover, site.url).toString() : undefined;
-const jsonLd = [
+const jsonLd: Record<string, unknown>[] = [
   {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -55,7 +55,7 @@ if (post.data.faq && post.data.faq.length) {
       name: f.q,
       acceptedAnswer: { '@type': 'Answer', text: f.a },
     })),
-  } as (typeof jsonLd)[number]);
+  });
 }
 ---
 

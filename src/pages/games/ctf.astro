@@ -6,7 +6,22 @@ const DEVSEC = 'https://devsec.ksatriabintangsamudra.com';
 
 // Flags are KBS{...}. Plaintext flags are NOT in the source — only the puzzle
 // (encoded/ciphered or a downloadable artifact) and a SHA-256 of the answer.
-const challenges = [
+interface Challenge {
+  id: string;
+  cat: string;
+  diff: string;
+  pts: number;
+  title: string;
+  tool: string | null;
+  type: 'text' | 'image' | 'file' | 'web';
+  prompt: string;
+  hint: string;
+  hash: string;
+  puzzle?: string;
+  file?: string;
+  thumb?: string;
+}
+const challenges: Challenge[] = [
   { id: 'warmup', cat: 'ENCODING', diff: 'intro', pts: 50, title: 'Warm-up', tool: 'base64', type: 'text', prompt: 'Everything starts somewhere. Decode this string.', puzzle: 'S0JTe2I0czNfczF4dHlfZjB1cn0=', hint: 'Trailing "=" padding means Base64. DevSec › Base64 › decode.', hash: 'b60aed27dcbfa56b54741126cdf961111415f2a894fdcd53d5e44671bec02c2d' },
   { id: 'hexdump', cat: 'ENCODING', diff: 'intro', pts: 75, title: 'Hex Dump', tool: 'hex', type: 'text', prompt: 'Two characters per byte. Turn the hex back into text.', puzzle: '4b42537b7477305f6e3162626c33735f7033725f627974337d', hint: 'Only 0-9 and a-f = hexadecimal. DevSec › Hex › to text.', hash: 'b75ae08e97d9c275f262de81fe7398f4b3661523198d539325a74f756e820374' },
   { id: 'thirty-two', cat: 'ENCODING', diff: 'easy', pts: 100, title: 'Thirty-Two', tool: 'base32', type: 'text', prompt: 'Like Base64, but upper-case and chunkier.', puzzle: 'JNBFG63UNAYXE5DZL52HOMC7MNUDI4TTPU======', hint: 'A-Z and 2-7 with "=" padding = Base32. DevSec › Base32.', hash: '6f07cf454fabd9238d63b3685d6c1b594e088df54408d61bd97797f3c6afcb1a' },
@@ -35,10 +50,6 @@ const tools = [
   { slug: 'qrdecode', label: 'QR decode' }, { slug: 'fileinspect', label: 'File Inspector' }, { slug: 'hash', label: 'Hash' },
 ];
 const cats = ['ALL', ...Array.from(new Set(challenges.map((c) => c.cat)))];
-const diffs = [
-  { k: 'intro', label: 'intro' }, { k: 'easy', label: 'easy' }, { k: 'medium', label: 'medium' },
-  { k: 'hard', label: 'hard' }, { k: 'insane', label: 'insane' },
-];
 const totalPts = challenges.reduce((a, c) => a + c.pts, 0);
 const catWords = cats.filter((c) => c !== 'ALL').map((c) => c.toLowerCase()).join(', ');
 ---
@@ -138,15 +149,15 @@ const catWords = cats.filter((c) => c !== 'ALL').map((c) => c.toLowerCase()).joi
             {c.type === 'file' && (
               <div class="ctf-card__file">
                 {c.thumb && <img class="ctf-card__thumb" src={c.thumb} alt="" width="240" height="135" loading="lazy" decoding="async" />}
-                {!c.thumb && <div class="ctf-card__fileicon" aria-hidden="true">{c.file.endsWith('.py') ? '🐍' : c.file.endsWith('.bin') ? '⛓' : '📄'}</div>}
-                <a class="ctf-card__dl" href={c.file} download>download {c.file.split('/').pop()} ↓</a>
+                {!c.thumb && <div class="ctf-card__fileicon" aria-hidden="true">{c.file!.endsWith('.py') ? '🐍' : c.file!.endsWith('.bin') ? '⛓' : '📄'}</div>}
+                <a class="ctf-card__dl" href={c.file} download>download {c.file!.split('/').pop()} ↓</a>
               </div>
             )}
 
             {c.type === 'web' && (
               <div class="ctf-card__file">
                 <div class="ctf-card__fileicon" aria-hidden="true">🌐</div>
-                <a class="ctf-card__dl" href={c.file} target="_blank" rel="noopener">open {c.file.split('/').pop()} ↗</a>
+                <a class="ctf-card__dl" href={c.file} target="_blank" rel="noopener">open {c.file!.split('/').pop()} ↗</a>
               </div>
             )}
 
@@ -281,7 +292,6 @@ const catWords = cats.filter((c) => c !== 'ALL').map((c) => c.toLowerCase()).joi
     });
 
     // Category filter
-    const grid = document.getElementById('ctf-grid')!;
     document.querySelectorAll('.ctf-filter').forEach((btn) => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.ctf-filter').forEach((b) => b.classList.remove('is-active'));

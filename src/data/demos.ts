@@ -30,7 +30,14 @@ export interface DemoBand {
   items: DemoItem[];
 }
 
-export const demos = {
+export interface Demos {
+  eyebrow: string;
+  title: { lead: string; em: string };
+  sub: string;
+  bands: DemoBand[];
+}
+
+export const demos: Demos = {
   eyebrow: 'Live demos',
   title: { lead: 'See everything I build —', em: 'try it live' },
   sub: 'Real, running products. Open any one, log in with the demo account, and click around. Each demo is isolated from real client data.',

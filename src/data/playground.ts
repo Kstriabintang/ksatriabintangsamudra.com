@@ -20,7 +20,14 @@ export interface PlaygroundBand {
   items: PlaygroundTool[];
 }
 
-export const playground = {
+export interface Playground {
+  eyebrow: string;
+  title: { lead: string; em: string };
+  sub: string;
+  bands: PlaygroundBand[];
+}
+
+export const playground: Playground = {
   eyebrow: 'Playground',
   title: { lead: 'Tools you can', em: 'use right now' },
   sub: 'Free browser tools I built and keep running — no sign-up, no ads. Open one, then come back.',
