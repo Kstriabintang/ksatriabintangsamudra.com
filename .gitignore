@@ -77,3 +77,6 @@ _tailwind.config.js.off
 /CNAME
 /public/CNAME
 /public/sitemap.xml
+
+# Kiro session checkpoint — local only, mirrors how CLAUDE.md / .claude are kept out of the repo
+KIRO.md
