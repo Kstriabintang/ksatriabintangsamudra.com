@@ -1,0 +1,71 @@
+---
+title: "Trojans: the malware you invite in, and how the FBI uninstalled it"
+description: Zeus, Emotet and Qakbot infected millions of computers by looking harmless. Then police did something wild — they used the botnets' own channels to remove the malware. A plain guide to trojans and the biggest botnet takedowns.
+date: 2026-10-28
+category: Security · Malware
+tags: [Trojan, Malware, Botnet, FBI, Europol, Security]
+readingMinutes: 5
+cover: /images/blog/trojans-and-botnet-takedowns.jpg
+takeaways:
+  - "A trojan does not break in. It tricks you into running it, usually through an email attachment or a fake download."
+  - "Modern trojans like Emotet and Qakbot became 'loaders' that rent out access to ransomware gangs."
+  - "In 2021 and 2023, police took over these botnets and used them to uninstall the malware from victims' computers."
+faq:
+  - q: "What is a trojan in cybersecurity?"
+    a: "A trojan, or trojan horse, is malware disguised as something harmless, like an invoice, a game crack or a software update. Unlike a worm, it does not spread on its own. It relies on the victim running it, then it opens a backdoor, steals data or installs more malware."
+  - q: "What is the difference between a virus, a worm and a trojan?"
+    a: "A virus attaches itself to other files and spreads when they are shared. A worm spreads by itself across networks without user action. A trojan pretends to be legitimate software so that the user installs it."
+  - q: "How did the FBI take down Qakbot?"
+    a: "In August 2023, the FBI-led Operation Duck Hunt gained access to Qakbot's infrastructure and redirected infected computers to FBI-controlled servers, which sent an uninstaller to more than 700,000 machines. Authorities also seized about $8.6 million in cryptocurrency."
+---
+
+The original Trojan Horse did not knock down the walls of Troy. The Trojans **pulled it inside themselves**, because it looked like a gift.
+
+Computer trojans work the same way, and that is why they are still one of the most successful kinds of malware ever made. They do not need a fancy exploit. They need you to click.
+
+## What a trojan actually is
+
+A trojan is malware wearing a costume. It might look like:
+
+- an invoice in a Word document that asks you to "enable content",
+- a cracked game or a free version of paid software,
+- a browser update, a PDF reader, a "wallet tool" for crypto,
+- a job test or a repo from a friendly recruiter.
+
+Once you run it, the real payload starts: stealing passwords, logging keystrokes, giving a remote attacker control, or downloading more malware. Some are called **RATs**, remote access trojans, because they quietly give someone else the keyboard.
+
+Quick vocabulary check: a **virus** infects other files, a **worm** spreads by itself, and a **trojan** gets you to install it. I go deeper into that family tree in [the history of computer viruses](/blog/history-of-computer-viruses/).
+
+## The banking trojans
+
+Around 2007, **Zeus** became the template. It sat inside your browser and stole online banking logins, sometimes changing the page you saw so you would type in extra details. Infected machines were linked into a **botnet**, a remote-controlled army of computers. Variants of Zeus, like GameOver Zeus, are why one of its alleged operators sits on the [FBI's Cyber Most Wanted list](/blog/fbi-cyber-most-wanted/).
+
+## Emotet: from trojan to cybercrime delivery service
+
+**Emotet** appeared in 2014 as a banking trojan. Then its operators had a business idea: why steal bank logins yourself when you can **rent out access** to every computer you have infected?
+
+Emotet became a **loader**. It spread through convincing reply-chain emails, often continuing real conversations stolen from earlier victims. Then it sold its foothold to other criminals, including ransomware gangs. Europol called it one of the most dangerous pieces of malware in the world.
+
+## The takedowns: police using the malware against itself
+
+Here is the twist that makes these stories so satisfying.
+
+**Emotet, January 2021.** An international operation coordinated by Europol and Eurojust took control of Emotet's infrastructure from the inside. Investigators pushed an update to infected machines that disconnected them from the criminals, and the malware was scheduled to remove itself in April 2021. Emotet later came back in a weaker form, but the hit was massive.
+
+**Qakbot, August 2023.** The FBI led **Operation Duck Hunt** against Qakbot, another trojan turned loader that had fed ransomware groups for years. The FBI redirected infected computers to servers it controlled, then sent them an uninstaller. More than **700,000 computers** were cleaned, and around **$8.6 million** in cryptocurrency was seized.
+
+**Operation Endgame, May 2024.** Europol called it the largest ever operation against botnets, hitting several loaders at once, including IcedID, SmokeLoader, Pikabot and Bumblebee.
+
+Think about how wild that is: the delivery channel criminals built to install malware became the channel police used to uninstall it.
+
+## How to not be the one who opens the horse
+
+- **Never "enable macros" on a document you did not expect.** That single button has started thousands of incidents.
+- **Download software only from official sources.** Cracks and "free" premium tools are the most common trojan costumes.
+- **Treat unexpected attachments in old email threads as suspicious.** Reply-chain hijacking makes them look familiar on purpose.
+- **Run untrusted code in a sandbox or VM.** Especially "take-home tests" from strangers. North Korean teams love that trick.
+- **Keep endpoint protection on and updated,** and give users non-admin accounts so a trojan cannot do everything.
+
+## The honest summary
+
+Trojans win because they attack the one thing no patch can fix: our habit of trusting things that look normal. The good news is that the same infrastructure that makes them powerful can also make them fragile. Take over the command server, and an army of infected machines can be told to go home.

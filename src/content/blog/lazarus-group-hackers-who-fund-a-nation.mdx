@@ -1,0 +1,69 @@
+---
+title: "Lazarus Group: the hackers who fund a nation"
+description: Sony, Bangladesh Bank, WannaCry, Ronin, Bybit. One North Korean hacking operation keeps showing up behind the biggest heists in history. Here is how they work, and what every builder should learn from them.
+date: 2026-10-28
+category: Security · Threat Intel
+tags: [Lazarus Group, North Korea, Cybercrime, Crypto, Security]
+readingMinutes: 5
+cover: /images/blog/lazarus-group-hackers-who-fund-a-nation.jpg
+takeaways:
+  - "Lazarus Group is a North Korean state-backed operation whose main job is stealing money, not just spying."
+  - "Its biggest wins came from people, not zero-days: fake job offers, poisoned developer machines, trusted software."
+  - "If you hold money or keys, assume a patient, well-funded attacker is studying your team, not just your code."
+faq:
+  - q: "What is the Lazarus Group?"
+    a: "Lazarus Group is the umbrella name security researchers and governments use for North Korean state-sponsored hacking units. It has been linked to the Sony Pictures hack, the Bangladesh Bank heist, WannaCry and a long series of cryptocurrency thefts, including the roughly $1.5 billion Bybit hack in 2025."
+  - q: "Why does North Korea hack crypto exchanges?"
+    a: "Heavy sanctions cut North Korea off from the normal financial system. Stolen cryptocurrency can be laundered and converted into hard currency, which governments and UN experts say helps fund the regime, including its weapons programmes."
+  - q: "How do Lazarus hackers usually get in?"
+    a: "Mostly through social engineering: fake recruiters sending booby-trapped job tests, compromised developer laptops, malicious packages and trojanised trading apps. Once inside, they move slowly and wait for the moment that matters."
+---
+
+Most hackers want money. Some want attention. A few want secrets. **Lazarus Group** wants all three, and it has something no ransomware gang will ever have: a country standing behind it.
+
+I spend a lot of my time studying how real attacks actually happen, because that is the only honest way to defend what I build. And no name shows up more often behind the biggest heists of the last decade than this one.
+
+## Who they are
+
+"Lazarus" is the umbrella name researchers use for hacking units run by North Korea. Governments, including the United States, attribute them to the country's intelligence apparatus. You will also see names like APT38, TraderTraitor or BlueNoroff. They are sub-teams, specialised by mission.
+
+What makes them different is the goal. Most state hackers steal secrets. Lazarus steals **money**, on purpose, at national scale. A heavily sanctioned country cannot easily use the banking system, so it robs it instead.
+
+## The greatest hits
+
+The list is honestly ridiculous:
+
+- **2014: Sony Pictures.** Days before the release of *The Interview*, a comedy mocking Kim Jong-un, Sony's network got wiped and its emails leaked. The FBI publicly blamed North Korea.
+- **2016: Bangladesh Bank.** Attackers used the bank's own SWIFT access to request almost a billion dollars from its account at the New York Fed. $81 million got away. I wrote the full story in [the heist that a typo stopped](/blog/bangladesh-bank-heist-typo/).
+- **2017: WannaCry.** Ransomware that tore through hospitals and factories in over 150 countries. The US and UK later attributed it to North Korea. More on that in [the $10.69 kill switch](/blog/wannacry-kill-switch/).
+- **2022: Ronin bridge.** Around $620 million drained from the bridge behind the game Axie Infinity. Reporting later traced the entry point to a fake job offer sent to an engineer.
+- **2025: Bybit.** Roughly **$1.5 billion** in Ethereum, the biggest crypto theft ever recorded. The FBI named North Korea within days. Breakdown in [the Bybit heist](/blog/bybit-1-5-billion-heist/).
+
+## How they actually get in
+
+Here is the part that should change how you think. The headline numbers are huge, but the entry points are almost boring.
+
+**Fake recruiters.** A "recruiter" on LinkedIn offers a great remote role. The technical test is a repo or a PDF. You run it, and now there is a backdoor on the laptop you also use for work.
+
+**Poisoned developer tools.** Malicious npm and PyPI packages, trojanised crypto trading apps, fake "wallet utilities". They target the people who hold the keys, not the vault itself.
+
+**Fake IT workers.** The US Justice Department has charged multiple schemes where North Korean operatives got hired as remote developers at Western companies under stolen or fake identities, sending their salaries home.
+
+**Patience.** In Bangladesh they reportedly sat inside the network for a long time before moving. They learn your process, then wait for the weekend.
+
+## Why this matters even if you are "too small"
+
+I hear this a lot: "Nation-state hackers would never bother with my startup." Maybe. But Lazarus does not target companies, it targets **access**. If your app touches money, wallets, payment keys or a popular open-source package, you are on someone's map.
+
+And the techniques trickle down. What a state team pioneers in 2022, a ransomware crew copies in 2024.
+
+## What I take from Lazarus
+
+- **Your team is the attack surface.** Separate the machine you test random code on from the machine that can sign transactions or deploy to production. Treat "run this take-home test" as untrusted code, because it is.
+- **Make big money movements slow and multi-person.** Every Lazarus heist exploited a moment where one compromised process could move huge value. Delays, limits and a second human break that.
+- **Verify what you sign.** If the screen can lie to you, the signature is worthless. Bybit proved that.
+- **Watch your dependencies.** A package you installed once and forgot is still running in your build every day.
+
+## The uncomfortable summary
+
+Lazarus is not a group of genius kids in hoodies. It is a patient, salaried, well-organised operation with a national budget and a simple KPI: bring money home. The best defence is not a magic product. It is removing the single points of trust they love to exploit, starting with the humans.

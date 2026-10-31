@@ -1,0 +1,78 @@
+---
+title: "From Creeper to Stuxnet: a short history of computer viruses"
+description: The first computer virus was a joke. Then came a pair of brothers in Lahore, a worm that took down a tenth of the internet, a love letter that infected millions, and a digital weapon that broke real machines.
+date: 2026-10-28
+category: Security · History
+tags: [Computer Virus, Malware, History, Worm, Security]
+readingMinutes: 5
+cover: /images/blog/history-of-computer-viruses.jpg
+takeaways:
+  - "Early viruses were experiments and pranks. Money and politics came later."
+  - "The Morris worm in 1988 showed that one bug in widely used software can take down a big chunk of the internet."
+  - "Stuxnet proved that code can physically destroy machines, and turned malware into a weapon of states."
+faq:
+  - q: "What was the first computer virus?"
+    a: "Creeper, written in 1971 by Bob Thomas at BBN, is usually called the first self-replicating program. It moved between computers on ARPANET and displayed the message 'I'm the creeper, catch me if you can!'. It did no damage. The first widespread PC virus was Brain, created in Pakistan in 1986."
+  - q: "What was the Morris worm?"
+    a: "The Morris worm was released in November 1988 by Cornell student Robert Tappan Morris. A bug made it reinfect machines far more than intended, slowing or crashing an estimated several thousand computers, around a tenth of the internet at the time. Morris became the first person convicted under the US Computer Fraud and Abuse Act."
+  - q: "What was Stuxnet?"
+    a: "Stuxnet was a highly sophisticated worm discovered in 2010 that targeted industrial control systems at Iran's Natanz uranium enrichment facility, making centrifuges spin out of control while showing operators normal readings. It is widely considered the first known cyberweapon to cause physical destruction."
+---
+
+Every time I read about modern ransomware or AI-powered attacks, I like to remember where it all started. Because the history of computer viruses is weirder, funnier and scarier than most people think.
+
+## 1971: Creeper, the polite intruder
+
+The first self-replicating program is usually credited to **Bob Thomas** at the company BBN. It was called **Creeper**, and it hopped between computers on **ARPANET**, the ancestor of the internet, printing a message:
+
+> I'M THE CREEPER: CATCH ME IF YOU CAN
+
+It did no harm. It was an experiment. And soon someone wrote **Reaper**, a program designed to find and delete Creeper. So the first virus came with the first antivirus. Some things never change.
+
+## 1982: Elk Cloner, the teenage prank
+
+A 15-year-old named **Rich Skrenta** wrote **Elk Cloner** for the Apple II. It spread through floppy disks and, every 50th boot, showed a little poem. Annoying, not dangerous. But it proved viruses could spread "in the wild" between ordinary people.
+
+## 1986: Brain, the virus with a phone number
+
+**Brain** is considered the first virus for IBM PCs. It was written by two brothers, **Basit and Amjad Farooq Alvi**, in **Lahore, Pakistan**. They said they made it to track illegal copies of their software.
+
+The wildest detail: the virus contained their names, address and phone number. They later said people really did call them. Try that with modern malware.
+
+## 1988: the Morris worm, the internet's first bad day
+
+On **2 November 1988**, Cornell graduate student **Robert Tappan Morris** released a program to measure how big the internet was. It exploited weaknesses in Unix services and weak passwords to spread.
+
+The problem was a design decision: to avoid being blocked, it sometimes reinfected machines that were already infected. It copied itself so aggressively that computers slowed to a crawl and crashed. Estimates suggest around **6,000 machines**, roughly **a tenth of the internet** back then, were affected.
+
+Morris became the first person convicted under the US **Computer Fraud and Abuse Act**. The incident also led to the creation of the first CERT, a team dedicated to responding to computer emergencies. He later became a professor at MIT.
+
+## 2000: ILOVEYOU, the love letter from Manila
+
+In May 2000, millions of people got an email with the subject **"ILOVEYOU"** and an attachment called LOVE-LETTER-FOR-YOU.txt.vbs. Curiosity did the rest. Opening it overwrote files and mailed the worm to everyone in your address book.
+
+It spread around the world in hours and caused damage often estimated in the billions. It was traced to **Onel de Guzman**, a student in the **Philippines**. He was never prosecuted, because at the time the Philippines had no law against writing malware. The country passed one shortly after.
+
+Lesson that still holds: the best exploit is human emotion. The [trojans](/blog/trojans-and-botnet-takedowns/) of today use exactly the same trick.
+
+## 2010: Stuxnet, code that breaks steel
+
+Then everything changed. In 2010, researchers discovered **Stuxnet**, a worm far more complex than anything seen before. It used several unknown Windows vulnerabilities, spread through USB drives, and searched for one very specific kind of industrial controller.
+
+Its target was Iran's **Natanz** uranium enrichment facility. Stuxnet made centrifuges spin at damaging speeds while showing operators normal readings. It is widely reported to have been a joint US and Israeli operation, although neither government has officially confirmed it.
+
+For the first time, malware had caused **physical destruction**. Code had become a weapon of states.
+
+## And then: the money era
+
+After Stuxnet, the story shifted to business. Banking trojans, ransomware, crypto theft. [WannaCry](/blog/wannacry-kill-switch/) combined a leaked state exploit with ransomware. [Lazarus Group](/blog/lazarus-group-hackers-who-fund-a-nation/) turned hacking into national income. Now [AI agents](/blog/ai-orchestrated-cyberattack/) are starting to run attacks themselves.
+
+## What 50 years of viruses teach me
+
+- **Most "hacks" exploit trust, not genius.** Floppy disks, love letters, USB sticks, job offers.
+- **One bug in popular software can hit everyone at once.** That was true for Morris in 1988 and is true for every dependency we install today.
+- **Intent escalates.** Pranks became crime, crime became espionage, espionage became sabotage. The tools get passed down the chain.
+
+## The honest summary
+
+The first virus said "catch me if you can". Fifty years later, we are still trying. The technology changed completely, but the core lesson did not: anything that runs code you did not write is a door. Our job is to know which doors are open.

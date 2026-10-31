@@ -1,0 +1,72 @@
+---
+title: "The $1.5 billion Bybit hack: when the screen lies to you"
+description: In February 2025 North Korean hackers stole about $1.5 billion in Ethereum from Bybit, the largest crypto theft ever. They did not break the blockchain. They poisoned the web page the signers trusted.
+date: 2026-10-28
+category: Security · Crypto
+tags: [Crypto, Bybit, Lazarus Group, Supply Chain, Security]
+readingMinutes: 5
+cover: /images/blog/bybit-1-5-billion-heist.jpg
+takeaways:
+  - "Bybit lost about $1.5 billion in Ethereum on 21 February 2025, the largest crypto theft ever recorded."
+  - "The attackers compromised a wallet provider's developer machine and injected code that showed signers a fake transaction."
+  - "If your security depends on humans reading a screen, the screen itself becomes the target."
+faq:
+  - q: "What happened in the Bybit hack?"
+    a: "On 21 February 2025, attackers stole roughly $1.5 billion in Ethereum from a Bybit cold wallet during a routine transfer. Signers approved what looked like a normal transaction, but malicious code changed what they were actually signing, handing control of the wallet to the attackers."
+  - q: "Who was behind the Bybit hack?"
+    a: "The FBI publicly attributed the theft to North Korea on 26 February 2025, naming the activity TraderTraitor, a cluster linked to the Lazarus Group."
+  - q: "What is blind signing in crypto?"
+    a: "Blind signing means approving a transaction without being able to verify its real contents, for example when a hardware wallet only shows a hash or when you trust a web interface to describe it correctly. The Bybit hack showed how attackers exploit this gap."
+---
+
+There is a phrase in crypto security I keep coming back to: **don't trust, verify**. On **21 February 2025**, one of the biggest exchanges in the world trusted the wrong thing, and lost around **$1.5 billion** in a few minutes.
+
+It is the largest crypto theft ever recorded. And it did not require breaking any cryptography.
+
+## The setup
+
+**Bybit**, a Dubai-based exchange, kept a large amount of Ethereum in a **cold wallet**, meaning offline storage protected by a **multisig** setup. Moving funds needed several authorised people to approve and sign.
+
+That is a good design. Several humans, several keys, no single point of failure. On paper.
+
+The wallet was managed through **Safe\{Wallet\}**, a popular multisig platform with a web interface. When Bybit's team did a routine transfer from cold storage to a warm wallet, the signers looked at the Safe interface, checked the details, and signed.
+
+What they saw was not what they signed.
+
+## The trick: poison the screen, not the vault
+
+According to investigations published after the hack, the attackers had compromised a **developer machine at Safe\{Wallet\}**. From there they got access to the cloud storage that served Safe's web interface, and planted **malicious JavaScript**.
+
+The code was surgical. It only activated for Bybit's wallet. For everyone else, Safe worked normally.
+
+When Bybit's signers opened the transaction, the interface showed a normal transfer. Under the hood, the transaction they signed actually **changed the logic of the wallet contract itself**, giving the attackers control. Once enough signatures were collected, the attackers drained around **400,000 ETH**.
+
+Then the malicious code was removed, to cover the tracks.
+
+This is a **supply chain attack**. Bybit's own systems were not the first thing hacked. A tool they trusted was. I wrote more about why that category scares me in [the most dangerous code is the code you didn't write](https://dev.to/kstriabintang/the-most-dangerous-code-in-your-app-is-the-code-you-didnt-write-30nf).
+
+## Who did it
+
+On **26 February 2025**, the FBI publicly attributed the hack to **North Korea**, calling the activity **TraderTraitor**, a cluster tied to [Lazarus Group](/blog/lazarus-group-hackers-who-fund-a-nation/). The FBI also asked exchanges and node operators to block addresses linked to the laundering.
+
+And laundering started fast. The stolen ETH was split across many wallets and swapped through various services within days, which is exactly the pattern seen in earlier North Korean heists.
+
+## How Bybit survived
+
+The interesting part: Bybit did not collapse. Its CEO went public quickly, said client assets were backed one-to-one, and the exchange secured loans and deposits to cover withdrawals. It also launched a bounty programme to reward anyone who helped freeze stolen funds.
+
+Fast, honest communication did not bring the money back, but it probably prevented a bank run that would have been far worse.
+
+## What every builder should learn
+
+I build payment-heavy apps, and this case changed how I think about approvals:
+
+- **The UI is part of your security boundary.** If a signer can only verify what a web page tells them, a compromised web page defeats the whole multisig.
+- **Verify transactions on an independent device.** Hardware wallets and tools that decode the raw transaction should show what is really happening, not just a hash. That is how you stop **blind signing**.
+- **Developer machines are crown jewels.** One compromised laptop at a vendor led to a billion-dollar loss. Treat the people who can deploy front-end code like people who hold keys.
+- **Watch your vendors.** Ask how your critical tools protect their own build and hosting pipeline.
+- **Rehearse the bad day.** Bybit's crisis response worked because it was fast. Have the plan before you need it.
+
+## The honest summary
+
+The Bybit hack is the perfect example of the modern heist. The blockchain did exactly what it was told. The multisig did exactly what it was designed to do. The humans followed the process. The attackers simply changed what the humans saw. In 2025, the most valuable thing to hack was not a key. It was a screen.

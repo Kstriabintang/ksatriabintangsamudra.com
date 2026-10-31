@@ -1,0 +1,63 @@
+---
+title: "WannaCry: the global ransomware stopped by a $10.69 domain"
+description: In May 2017 a worm encrypted hospitals, factories and train stations in over 150 countries in a single weekend. A 22-year-old researcher stopped it by registering a domain name. Here is how, and why it should never have spread.
+date: 2026-10-28
+category: Security · Case Study
+tags: [Ransomware, WannaCry, Malware, Patching, Security]
+readingMinutes: 5
+cover: /images/blog/wannacry-kill-switch.jpg
+takeaways:
+  - "WannaCry spread as a worm through an old Windows file-sharing flaw that already had a patch for two months."
+  - "A researcher stopped it by registering an unclaimed domain the malware checked before running."
+  - "Unpatched, flat networks turn one infected machine into a hospital-wide outage."
+faq:
+  - q: "What was WannaCry?"
+    a: "WannaCry was a ransomware worm released on 12 May 2017. It encrypted files and demanded $300 to $600 in Bitcoin, and it spread automatically between computers using the EternalBlue exploit against Windows SMBv1. It hit hundreds of thousands of machines in more than 150 countries."
+  - q: "How was WannaCry stopped?"
+    a: "Security researcher Marcus Hutchins noticed the malware tried to contact a strange, unregistered domain. He registered it for about $10.69. Once that domain answered, new infections stopped running their encryption, which acted as a kill switch."
+  - q: "Who was behind WannaCry?"
+    a: "The United States and the United Kingdom publicly attributed WannaCry to North Korea in December 2017, linking it to the Lazarus Group."
+---
+
+On **Friday, 12 May 2017**, hospital staff across England walked up to their computers and found a red window demanding Bitcoin. Ambulances were diverted. Appointments were cancelled. At the same time, factories, telecoms and train stations around the world were seeing the same screen.
+
+The ransomware was called **WannaCry**. And the craziest part of the story is how it ended: a young researcher spent about **$10.69** on a domain name, and the spread stopped.
+
+## Why it spread so fast
+
+Most ransomware needs someone to click something. WannaCry did not. It was a **worm**: once on a machine, it scanned for other Windows computers and infected them on its own.
+
+The engine was an exploit called **EternalBlue**, targeting a flaw in SMBv1, the old Windows file-sharing protocol. EternalBlue had been developed by the US National Security Agency and leaked online by a group called the Shadow Brokers in April 2017.
+
+Here is the detail that hurts: Microsoft had already released a patch for that flaw, **MS17-010**, in **March 2017**. Two months before WannaCry. The machines that went down were mostly the ones that had not installed it, or were too old to receive it.
+
+## The damage
+
+Estimates put infections at **hundreds of thousands of computers in more than 150 countries**. The UK's National Health Service was the most visible victim, with thousands of appointments and operations cancelled. Car plants paused production. Payment demands started at $300 in Bitcoin and doubled if you waited.
+
+The ransom haul itself was actually small. The real cost was the downtime, billions according to many estimates, because a worm does not care whether you are a hospital or a coffee shop.
+
+## The $10.69 kill switch
+
+**Marcus Hutchins**, a 22-year-old British researcher known online as MalwareTech, was looking at a sample of the malware. He noticed it tried to connect to a long, nonsense domain name before doing anything else. That domain was **not registered**.
+
+So he registered it, for around $10.69, mostly to track infections.
+
+It turned out the malware's logic was roughly: "if this domain answers, stop". Once his domain went live, new infections stopped encrypting. One of the most damaging cyberattacks in history slowed to a halt because of a cheap domain and a curious person.
+
+Why would malware have such a switch? The leading theory is that it was meant to detect security sandboxes, which often answer every domain request. Whatever the intent, it saved a lot of systems that weekend.
+
+In December 2017, the US and UK publicly attributed WannaCry to **North Korea**, the same [Lazarus Group](/blog/lazarus-group-hackers-who-fund-a-nation/) behind other headline attacks.
+
+## What WannaCry teaches every engineer
+
+I keep these four lessons in my head whenever I set up infrastructure:
+
+- **Patch like your business depends on it.** A two-month-old patch would have stopped WannaCry cold. "We will update after the release" is how incidents start.
+- **Kill legacy protocols.** SMBv1 was obsolete for years. If you do not need an old service, turn it off. Every unused service is an unlocked door.
+- **Segment your network.** A worm spreads sideways. If one infected laptop can reach every server, the whole organisation is one machine wide.
+- **Back up, offline, and test the restore.** Ransomware is only scary when you cannot rebuild without paying.
+
+## The honest summary
+
+WannaCry was not stopped by an expensive security product. It was stopped by one person reading the code carefully, and it could have been prevented by a patch that already existed. That combination of boring discipline and curious humans is still the best defence we have.

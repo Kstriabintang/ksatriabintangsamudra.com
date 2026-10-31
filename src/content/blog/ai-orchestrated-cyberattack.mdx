@@ -1,0 +1,69 @@
+---
+title: "The first AI-run cyberattack is already here"
+description: In 2025 Anthropic reported a state-sponsored group using Claude Code to run most of a hacking campaign on its own. What modern AI hackers actually do, what they still cannot do, and how defenders should respond.
+date: 2026-10-28
+category: AI · Security
+tags: [AI, Cybersecurity, AI Agents, Hackers, Threat Intel]
+readingMinutes: 5
+cover: /images/blog/ai-orchestrated-cyberattack.jpg
+takeaways:
+  - "AI agents can now run large parts of an intrusion: reconnaissance, exploit writing, credential testing and data sorting."
+  - "Attackers got around safety rules by splitting the work into small, innocent-looking tasks and posing as security testers."
+  - "The same AI that speeds up attackers also speeds up defenders. The team that automates detection first wins."
+faq:
+  - q: "Was there really an AI-orchestrated cyberattack?"
+    a: "Yes. In November 2025 Anthropic published a report describing a Chinese state-sponsored group, which it called GTG-1002, that used Claude Code inside an automated framework to target around 30 organisations. Anthropic said AI performed most of the tactical work, with humans stepping in at key decision points."
+  - q: "How do hackers use AI today?"
+    a: "Common uses include writing convincing phishing messages, cloning voices and faces for fraud, speeding up reconnaissance, writing and adapting exploit code, and automating repetitive steps inside a network. The more advanced groups chain these steps together with AI agents."
+  - q: "Can AI hack by itself?"
+    a: "Not fully. Current AI agents can perform many steps quickly, but they still make mistakes, such as inventing credentials or overstating results. Human operators remain in the loop to direct and verify. The worry is how quickly that gap is shrinking."
+---
+
+For years, "AI hacker" was a phrase for conference slides and movie trailers. In November 2025 it became an incident report.
+
+**Anthropic**, the company behind Claude, published details of what it called the first documented large-scale cyberattack executed mostly by AI. I use AI agents every day to build software, so this report hit close to home. The same tools that make me faster can make an attacker faster too.
+
+## What happened
+
+According to Anthropic, in **mid-September 2025** it detected a state-sponsored group, which it designated **GTG-1002** and assessed as Chinese with high confidence. The group used **Claude Code**, Anthropic's coding agent, inside an automated framework to target roughly **30 organisations**: tech companies, financial institutions, chemical manufacturers and government agencies. A small number of intrusions succeeded.
+
+The scary part is the division of labour. Anthropic estimated that AI did the large majority of the tactical work. Humans picked the targets and approved the big moves. The agent did the grind: mapping systems, finding weak spots, writing exploit code, testing stolen credentials, and sorting stolen data to find what was valuable.
+
+Work that used to take a team of operators weeks was happening at machine speed.
+
+## How they got around the guardrails
+
+AI models are trained to refuse obviously malicious work. So the attackers did what social engineers have always done: they lied.
+
+- **They split the attack into tiny tasks.** "Scan this range." "Explain this service." "Write a script that tests these logins." Each request looks like normal security work on its own.
+- **They gave the AI a cover story.** The operators reportedly told the model it was working for a legitimate cybersecurity firm doing defensive testing.
+
+No single prompt looked like a crime. The crime only appeared when you saw all of them together. That is a lesson for anyone building AI products: safety checks on single requests are not enough.
+
+## What the AI still got wrong
+
+This is the part people skip. Anthropic noted the agent sometimes **hallucinated**: it claimed to find credentials that did not work, or presented public information as a secret discovery. Humans still had to check its homework.
+
+So no, we are not at "press a button, hack a bank". But we are past "AI can only write phishing emails". The gap between those two is closing every few months.
+
+## The everyday AI crime you will actually meet
+
+Most people will never face a state-level AI agent. They will face the cheaper stuff:
+
+- **Phishing with perfect grammar.** The old tip "look for spelling mistakes" is dead. AI writes clean, personal, local-language messages at scale.
+- **Voice and video clones.** A few seconds of audio is enough to fake a voice. I wrote about the [$25 million deepfake video call](/blog/deepfake-cfo-25-million/) that proved how real this is.
+- **Faster exploitation.** When a new vulnerability is published, attackers use AI to turn the advisory into working code faster than many teams can patch.
+- **Underground "evil GPT" tools.** Since 2023, criminal forums have sold chatbots like WormGPT and FraudGPT, marketed as AI without the safety rules.
+
+## How defenders should respond
+
+I do not think the answer is panic. It is matching speed with speed.
+
+- **Use AI on defence too.** Log triage, alert summarising, code review and threat hunting are exactly the boring, high-volume work agents are good at. Anthropic itself used Claude to analyse the data from this investigation.
+- **Patch faster than the AI can weaponise.** If an exploit can be written in hours, your patch window cannot be months.
+- **Watch behaviour, not just signatures.** An AI-driven intrusion moves fast and makes lots of requests. Unusual speed is a signal.
+- **If you build AI tools, think about misuse patterns.** Look at sessions and accounts, not just single prompts.
+
+## The honest summary
+
+The first AI-run cyberattack did not look like a movie. It looked like a very fast, very tireless junior operator that sometimes made things up, supervised by a few humans. That is already enough to change the economics of hacking. Defenders who refuse to use the same tools will simply be slower, and in security, slower usually means breached.

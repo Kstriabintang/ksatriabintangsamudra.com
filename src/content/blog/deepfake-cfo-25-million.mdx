@@ -1,0 +1,67 @@
+---
+title: "The $25 million video call where everyone was a deepfake"
+description: A finance employee joined a video call with the CFO and several colleagues, then sent $25 million. None of the other people on the call were real. How the Arup deepfake scam worked, and how to stop the next one.
+date: 2026-10-28
+category: AI · Security
+tags: [Deepfake, AI, Fraud, Social Engineering, Security]
+readingMinutes: 5
+cover: /images/blog/deepfake-cfo-25-million.jpg
+takeaways:
+  - "In 2024 an Arup employee in Hong Kong sent about $25 million after a video call where every other participant was AI-generated."
+  - "Seeing and hearing someone is no longer proof that they are who they say they are."
+  - "The fix is process, not detection: out-of-band verification and two-person approval for unusual payments."
+faq:
+  - q: "What was the Arup deepfake scam?"
+    a: "In January 2024, a finance employee at the Hong Kong office of engineering firm Arup joined a video call with what appeared to be the company's UK-based CFO and other staff. All of them were deepfakes. The employee made 15 transfers totalling HK$200 million, about US$25 million, to five bank accounts."
+  - q: "How can you tell if a video call is a deepfake?"
+    a: "Visual tells like odd blinking or blurry edges are becoming unreliable. A better approach is to verify the request itself: call the person back on a number you already have, ask a question only they would know, or require a second approver for any payment."
+  - q: "How do companies protect against deepfake fraud?"
+    a: "Set rules that no single call, email or message can authorise a large payment. Use out-of-band callbacks, pre-agreed verification phrases, payment limits and two-person approval, and train staff that urgency plus secrecy is a red flag."
+---
+
+For years the advice for spotting a scam was simple: if you are not sure, get them on a video call. If you can see and hear the person, it is probably real.
+
+In 2024 that advice died in a meeting room in Hong Kong.
+
+## What happened
+
+In **January 2024**, a finance employee at the Hong Kong office of **Arup**, the British engineering firm behind landmarks like the Sydney Opera House, received a message that appeared to come from the company's **UK-based chief financial officer**. It talked about a confidential transaction.
+
+The employee was suspicious. Good instinct. So they joined a **video call** to check.
+
+On the call: the CFO, plus several colleagues they recognised. Faces, voices, mannerisms. Everything looked right. The instructions were clear, so the employee followed them.
+
+Over the following days they made **15 transfers** to **five bank accounts**, totalling **HK$200 million**, around **US$25 million**.
+
+Every other person on that call was an **AI-generated deepfake**. The fraud was only discovered when the employee later checked with head office. Hong Kong police said it was the first time they had seen a fake multi-person video conference used this way, and Arup confirmed it was the victim in May 2024.
+
+## Why it worked
+
+What I find brilliant, in a terrible way, is that the attackers did not hack Arup's systems at all. No malware. No stolen passwords. Arup itself later said its systems were not compromised. They hacked **trust**.
+
+- **Authority.** The request came from the CFO. Most employees do not argue with the CFO.
+- **Social proof.** It was not one fake person, it was a whole meeting. If everyone else on the call acts normal, you assume it is normal.
+- **Secrecy and urgency.** A "confidential" deal gives a reason not to ask around.
+- **Public raw material.** Executives appear in videos, interviews and conference talks. That footage is the training data for their clone.
+
+This is classic [social engineering](/blog/ai-orchestrated-cyberattack/), just upgraded with AI. The playbook is decades old. The special effects are new.
+
+## It is not the first, and it will not be the last
+
+Back in 2019, the Wall Street Journal reported a UK energy company being tricked into sending around €220,000 after a call where AI imitated the voice of its parent company's boss. That was voice only. Five years later it was a full video meeting.
+
+Today, voice-cloning tools need only a short sample. Real-time face-swap software runs on a gaming laptop. The cost of faking a person has collapsed.
+
+## How I would defend against this
+
+Here is my honest take: **do not rely on spotting the fake**. Detection tools help, but the tells keep disappearing. Design the process so that even a perfect fake cannot move money.
+
+- **Out-of-band verification.** If someone asks for money on a call or chat, hang up and call them back on a number you already had. Not the one in the message.
+- **Two-person rule.** No single employee should be able to send a large or unusual payment alone, no matter who asked.
+- **Verification phrases.** Some teams and families now agree on a private code word for emergencies. Low tech, very effective.
+- **Treat secrecy plus urgency as a red flag.** Real CFOs can wait ten minutes for a callback.
+- **Limit the public footage of key people** where it makes sense, and teach executives that their voice is now a security asset.
+
+## The honest summary
+
+The Arup scam is the moment "I saw them with my own eyes" stopped being proof. The attackers did not need to break any system, because the human approval process was the system. Make that process require more than one channel and more than one person, and a deepfake becomes just an expensive video.

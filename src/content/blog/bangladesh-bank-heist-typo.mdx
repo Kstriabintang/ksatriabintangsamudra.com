@@ -1,0 +1,71 @@
+---
+title: "The $1 billion bank heist that a typo stopped"
+description: In 2016 hackers used Bangladesh Bank's own SWIFT access to ask the New York Fed for almost a billion dollars. They got $81 million. A misspelled word, a street name and a broken printer saved the rest.
+date: 2026-10-28
+category: Security · Case Study
+tags: [Cybercrime, Banking, SWIFT, Lazarus Group, Security]
+readingMinutes: 5
+cover: /images/blog/bangladesh-bank-heist-typo.jpg
+takeaways:
+  - "The attackers did not break SWIFT. They used the bank's own legitimate credentials from the inside."
+  - "Timing was the weapon: they struck across three countries' weekends and a public holiday."
+  - "What saved most of the money was luck and a few humans who looked twice, not a security system."
+faq:
+  - q: "What happened in the Bangladesh Bank heist?"
+    a: "In February 2016, attackers inside Bangladesh Bank's network sent 35 fraudulent SWIFT payment requests worth about $951 million to the Federal Reserve Bank of New York. Most were blocked, but $81 million reached accounts in the Philippines and was laundered through casinos."
+  - q: "Who was behind the Bangladesh Bank hack?"
+    a: "The US Department of Justice charged North Korean programmer Park Jin Hyok in 2018, linking the heist to the same Lazarus Group operation behind the Sony Pictures hack and WannaCry."
+  - q: "How did a typo stop the Bangladesh Bank heist?"
+    a: "One transfer to Sri Lanka named the recipient as a 'fandation' instead of a 'foundation'. The misspelling made a routing bank ask questions, and that transfer was stopped."
+---
+
+Imagine robbing a bank without ever touching its vault. No masks, no tunnels. You just log in as the bank, politely ask its other bank to send you a billion dollars, and wait for the weekend.
+
+That is almost exactly what happened to **Bangladesh Bank**, the central bank of Bangladesh, in February 2016. It is one of my favourite case studies, because the most important parts of the story are about process, not code.
+
+## Step one: become the bank
+
+Central banks move money through **SWIFT**, the global messaging network banks use to tell each other "pay this amount to that account". SWIFT itself was not hacked. The attackers got inside Bangladesh Bank's own network, reached the computers that talk to SWIFT, and obtained valid credentials.
+
+From that point, their messages were not "hacker traffic". They were real instructions from a real central bank, sent through the real channel. That is the nightmare scenario: the system working perfectly, for the wrong person.
+
+They also installed custom malware to cover their tracks, including tampering with the software that printed transaction confirmations. More on that printer in a moment.
+
+## Step two: pick the perfect weekend
+
+The timing was genius, and I mean that as a warning.
+
+- The requests went out on a **Thursday night** in Dhaka. In Bangladesh the weekend is Friday and Saturday.
+- By the time Dhaka came back to work, **New York** was going into its own weekend.
+- And the money's destination, the **Philippines**, was about to shut for the Lunar New Year holiday.
+
+Three time zones, three weekends, one holiday. Every human who might have caught it was offline at a different moment.
+
+## Step three: ask for almost a billion
+
+The attackers sent **35 payment requests** to the Federal Reserve Bank of New York, totalling about **$951 million**. Five went through, about $101 million. The rest got stuck. Here is why.
+
+**The typo.** One $20 million transfer was headed to Sri Lanka, to a recipient described as a "fandation". Not foundation. A routing bank flagged the odd spelling and asked questions. That transfer was stopped and reversed.
+
+**The street name.** Several requests referenced a branch on a street called **Jupiter** in Manila. "Jupiter" also matched a name on a US sanctions list, which triggered extra manual review at the Fed. That one coincidence froze a huge chunk of the remaining requests.
+
+**The printer.** Back in Dhaka, staff noticed the printer that should have been printing SWIFT confirmations was not working. The malware had interfered with it. When they finally got the messages, they realised something was very wrong. But by then it was the weekend in New York.
+
+## Where the $81 million went
+
+The money that escaped landed in accounts at a bank in the Philippines, opened earlier under fake details. It was withdrawn, moved through casinos, and largely vanished. Only a fraction was ever recovered.
+
+In 2018, the US Department of Justice charged a North Korean programmer, **Park Jin Hyok**, tying the heist to the same group behind the Sony Pictures hack and WannaCry. You know them as [Lazarus Group](/blog/lazarus-group-hackers-who-fund-a-nation/).
+
+## What builders should steal from this story
+
+I work on payment flows, so this case lives rent-free in my head:
+
+- **Valid credentials are not proof of intent.** Your system should still ask "is this normal?" when a legitimate account suddenly asks for something huge.
+- **Big transfers need friction.** Limits, delays and a second approver for unusual amounts. Speed is a feature for users and a gift for attackers.
+- **Attackers plan around your calendar.** If nobody watches alerts on weekends and holidays, that is exactly when you will be robbed.
+- **Detection should not depend on luck.** A typo, a street name and a broken printer saved hundreds of millions. That is not a security strategy. That is a miracle.
+
+## The real lesson
+
+The Bangladesh Bank heist was not about a clever exploit. It was about trust: one system trusted the messages because they came from the right place. The fix is not "trust nothing", it is designing systems where one compromised step can never move a fortune on its own.

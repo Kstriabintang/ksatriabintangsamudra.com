@@ -1,0 +1,82 @@
+---
+title: "How police hacked LockBit, the world's biggest ransomware gang"
+description: In February 2024, the UK's National Crime Agency, the FBI and partners took over LockBit's own leak site and turned it against the gang. Inside Operation Cronos, and what it revealed about ransomware promises.
+date: 2026-10-28
+category: Security · Ransomware
+tags: [Ransomware, LockBit, FBI, NCA, Cybercrime, Security]
+readingMinutes: 5
+cover: /images/blog/lockbit-operation-cronos.jpg
+takeaways:
+  - "LockBit was a ransomware-as-a-service business: developers built the tools, affiliates did the attacks, both split the ransom."
+  - "Operation Cronos did not just shut LockBit down. Police took over its leak site and used it to troll and expose the gang."
+  - "Investigators found LockBit kept data from victims who had paid, proof that a ransom never buys a real guarantee."
+faq:
+  - q: "What was Operation Cronos?"
+    a: "Operation Cronos was an international law enforcement operation led by the UK's National Crime Agency with the FBI, Europol and other partners. In February 2024 it took control of LockBit's infrastructure, including its dark-web leak site, seized servers and obtained decryption keys to help victims."
+  - q: "Who is the leader of LockBit?"
+    a: "In May 2024, the UK, US and Australia named Russian national Dmitry Khoroshev as LockBitSupp, the alleged creator and administrator of LockBit. He was sanctioned and charged, and the US offered a reward of up to $10 million for information leading to his arrest."
+  - q: "Should you pay a ransomware ransom?"
+    a: "Law enforcement generally advises against paying. Operation Cronos showed that LockBit kept stolen data even from victims who paid for its deletion, so payment does not guarantee your data is gone or that you will not be targeted again."
+---
+
+Ransomware gangs love a leak site. It is their shop window: a dark-web page listing victims, a countdown clock, and a threat to publish stolen data unless the ransom is paid.
+
+In February 2024, visitors to **LockBit's** leak site found something new on the page. The logos of the UK's **National Crime Agency**, the **FBI** and a long list of international police forces. The site had been seized. And the police were just getting started.
+
+## Who LockBit was
+
+**LockBit** appeared around 2019 and grew into the most prolific ransomware operation in the world. The US Justice Department later said it had attacked more than **2,000 victims** and received more than **$120 million** in ransom payments.
+
+It worked like a franchise, a model called **ransomware-as-a-service**:
+
+- The **core team** built and maintained the ransomware, the negotiation panel and the leak site.
+- **Affiliates**, independent criminals, broke into companies and deployed it.
+- Ransoms were split, with the affiliate taking the larger share.
+
+It was a business with support staff, software updates, even a "bug bounty" for its own malware. The leader used the handle **LockBitSupp** and was so confident in his anonymity that he publicly offered a **$10 million** reward to anyone who could reveal his identity.
+
+That turned out to be a mistake.
+
+## Operation Cronos
+
+On **19 and 20 February 2024**, an operation led by the NCA, working with the FBI, Europol and partners in around ten countries, hit LockBit at the core. They:
+
+- took control of LockBit's **administration environment** and its **leak site**,
+- seized servers and cryptocurrency accounts,
+- obtained **decryption keys**, around a thousand at first, to help victims recover without paying,
+- and gathered data on affiliates, the people actually doing the attacks.
+
+But the most memorable part was the **trolling**. Instead of just showing a seizure banner, police rebuilt the leak site in LockBit's own style. They posted countdown clocks, this time for revelations about the gang. They published details about the operation, mocked LockBitSupp, and announced the identity reveal like a movie trailer.
+
+This was psychological warfare. Ransomware runs on trust between criminals. Affiliates suddenly had to wonder: what does the NCA know about me?
+
+## The deleted data that was never deleted
+
+One discovery matters for every company that has ever considered paying a ransom.
+
+LockBit's model promised that if you paid, your stolen data would be deleted. Investigators found that LockBit **kept data from victims who had paid**. The "deletion" was a lie.
+
+So when someone says "paying is the fastest way to make the problem go away", remember Cronos. Paying buys a criminal's promise, and those promises are worth exactly what you would expect.
+
+## The unmasking
+
+In **May 2024**, the UK, US and Australia named LockBitSupp as **Dmitry Khoroshev**, a Russian national. He was sanctioned, charged in the US, and the US offered up to **$10 million** for information leading to his arrest. He joined the [FBI's Cyber Most Wanted list](/blog/fbi-cyber-most-wanted/).
+
+He offered $10 million for his own identity. The police revealed it for free.
+
+## Did it kill LockBit?
+
+Not completely. LockBit tried to come back with new infrastructure and loud messages. But its reputation took a hit it never really recovered from. Affiliates moved to other groups, and the brand that had dominated ransomware turned into a cautionary tale.
+
+That is the realistic win in cybercrime: not a final arrest, but breaking the business model.
+
+## What I take from Cronos as a builder
+
+- **Assume ransomware is a business looking for easy customers.** Most affiliates get in through stolen VPN passwords, unpatched edge devices and exposed remote desktop. Close those, and you fall off the target list.
+- **Backups are your real negotiation power.** If you can restore, the ransom note is just an incident, not a hostage situation.
+- **Report to the authorities.** Operations like Cronos depend on victim reports, and they can bring back decryption keys.
+- **Never trust the "we deleted it" promise.** If data was stolen, plan as if it is out there.
+
+## The honest summary
+
+Operation Cronos showed that even the biggest ransomware gang is just a website, a few servers and a lot of fragile trust. Take those over, and the "untouchable" hackers start to look very touchable. Our side of the deal is to make sure they never get the first foothold.
