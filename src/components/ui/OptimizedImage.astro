@@ -20,13 +20,23 @@ const {
 } = Astro.props;
 
 const webpSrc = src.replace(/\.jpe?g$/i, '.webp');
+const smallSrc = src.replace(/\.jpe?g$/i, '-small.jpg');
+const smallWebpSrc = src.replace(/\.jpe?g$/i, '-small.webp');
 ---
 
 <picture style="display:contents">
-  <source type="image/webp" srcset={webpSrc} />
-  <source type="image/jpeg" srcset={src} />
+  <source
+    type="image/webp"
+    srcset={`${smallWebpSrc} 480w, ${webpSrc} 1280w`}
+    sizes="(max-width: 768px) 100vw, 480px"
+  />
+  <source
+    type="image/jpeg"
+    srcset={`${smallSrc} 480w, ${src} 1280w`}
+    sizes="(max-width: 768px) 100vw, 480px"
+  />
   <img
-    src={src}
+    src={smallSrc}
     alt={alt}
     width={width}
     height={height}
