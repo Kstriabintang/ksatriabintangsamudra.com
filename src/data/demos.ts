@@ -18,7 +18,7 @@ export interface DemoItem {
   href: string;
   poster: string;
   emoji: string;
-  status: 'Live demo' | 'Live' | 'In development';
+  status: 'Live demo' | 'Live' | 'In development' | 'In maintenance';
   access: DemoAccess;
   caseStudy?: string;
 }
@@ -70,7 +70,7 @@ export const demos: Demos = {
           href: 'https://venwave.ksatriabintangsamudra.com',
           poster: '/images/tools/venwave.jpg',
           emoji: '🎧',
-          status: 'Live demo',
+          status: 'In maintenance',
           access: {
             kind: 'login',
             email: 'demo@ksatriabintangsamudra.com',
@@ -160,7 +160,7 @@ export const demos: Demos = {
           href: 'https://vensix.biz.id',
           poster: '/images/shots/vensix/desktop.jpg',
           emoji: '🔀',
-          status: 'Live',
+          status: 'In maintenance',
           access: {
             kind: 'open',
             note: 'Live site — pre-launch, not yet open for commercial sign-ups.',

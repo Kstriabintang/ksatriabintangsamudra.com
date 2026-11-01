@@ -25,8 +25,8 @@ const popular = [
 
     <div class="error-page__search">
       <p class="error-page__search-label">Looking for something specific?</p>
-      <form class="error-page__search-form" onsubmit="event.preventDefault(); window.dispatchEvent(new CustomEvent('kb:open-palette'));">
-        <input class="error-page__search-input" type="text" placeholder="Search the site…" aria-label="Search the site" onfocus="window.dispatchEvent(new CustomEvent('kb:open-palette'))" />
+      <form class="error-page__search-form" data-search-form>
+        <input class="error-page__search-input" type="text" placeholder="Search the site…" aria-label="Search the site" data-search-input />
         <button class="error-page__search-btn" type="submit">Search</button>
       </form>
     </div>
@@ -46,3 +46,12 @@ const popular = [
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  const openPalette = () => window.dispatchEvent(new CustomEvent('kb:open-palette'));
+  document.querySelector('[data-search-form]')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    openPalette();
+  });
+  document.querySelector('[data-search-input]')?.addEventListener('focus', openPalette);
+</script>

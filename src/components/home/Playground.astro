@@ -36,7 +36,7 @@ import { playground } from '../../data/playground';
               <div class="showcard__art">
                 <span class="showcard__fallback" aria-hidden="true">{tool.emoji}</span>
                 <img class="showcard__img" src={tool.poster} alt="" width="800" height="500" loading="lazy" decoding="async" />
-                {tool.badge && <span class="showcard__badge">{tool.badge}</span>}
+                {tool.badge && <span class={`showcard__badge ${tool.badge === 'Maintenance' ? 'showcard__badge--maintenance' : ''}`}>{tool.badge}</span>}
               </div>
               <div class="showcard__body">
                 <h3 class="showcard__title">{tool.title}</h3>
@@ -161,7 +161,7 @@ import { playground } from '../../data/playground';
 
     document.querySelectorAll<HTMLElement>('#playground [data-demo]').forEach((card) => {
       card.addEventListener('click', () => {
-        // Only cards with a real demo login (e.g. VenWave) open the modal.
+        // Cards with a demo login open the modal first.
         // Everything else — games and live sites — just opens straight away.
         if (card.dataset.loginEmail) { open(card); return; }
         const href = card.dataset.href || '#';

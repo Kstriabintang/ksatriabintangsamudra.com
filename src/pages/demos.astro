@@ -4,7 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { demos } from '../data/demos';
 
 const statusClass = (s: string) =>
-  s === 'In development' ? 'is-dev' : s === 'Live demo' ? 'is-demo' : 'is-live';
+  s === 'In development' ? 'is-dev' : s === 'In maintenance' ? 'is-maintenance' : s === 'Live demo' ? 'is-demo' : 'is-live';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -91,10 +91,16 @@ const jsonLd = {
                   )}
 
                   <div class="demo-card__actions">
-                    <a class="demo-btn demo-btn--primary" href={d.href} target="_blank" rel="noopener">
-                      Try it live
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
-                    </a>
+                    {d.status === 'In maintenance' ? (
+                      <span class="demo-btn demo-btn--primary demo-btn--disabled" aria-disabled="true">
+                        Under maintenance
+                      </span>
+                    ) : (
+                      <a class="demo-btn demo-btn--primary" href={d.href} target="_blank" rel="noopener">
+                        Try it live
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+                      </a>
+                    )}
                     {d.caseStudy && (
                       <a class="demo-btn demo-btn--ghost" href={d.caseStudy}>
                         Case study

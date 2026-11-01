@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <img alt="Status" src="https://img.shields.io/badge/live%20%C2%B7%20phase%201%20%2B%202-10b981">
+  <img alt="Status" src="https://img.shields.io/badge/live-10b981">
   <img alt="Astro" src="https://img.shields.io/badge/Astro-5%2B-ff5d01">
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-strict-3178c6">
   <img alt="Hosting" src="https://img.shields.io/badge/Cloudflare-Workers-f38020">
@@ -212,6 +212,15 @@ Section numbers deliberately follow the reference (non-sequential on the page).
 | `/privacy` | What the contact form and chat store | 1 |
 | `/404` | Themed not-found page | 1 |
 | `/blog`, `/blog/<slug>`, `/rss.xml` | Writing | 3 |
+| `/demos` | Live demos hub with credentials | 1 |
+| `/games`, `/games/<slug>` | Browser games & CTF lab | 1 |
+| `/cheatsheets`, `/cheatsheets/<slug>` | Developer cheat sheets | 1 |
+| `/comparisons`, `/comparisons/<slug>` | Tech comparisons | 1 |
+| `/glossary` | Tech glossary | 1 |
+| `/learning-paths` | Curated learning paths | 1 |
+| `/certifications` | Certificates & courses | 1 |
+| `/hire-me` | Hire-me landing page | 1 |
+| `/verify` | CTF certificate verification | 1 |
 
 ### Navigation
 
@@ -233,19 +242,19 @@ Target layout after Phase 0 scaffolding:
 ```text
 .
 ├── astro.config.mjs            # site URL, integrations (react, sitemap, mdx), output: static
-├── wrangler.toml               # Pages Functions bindings (KV, D1) — Phase 2
+├── wrangler.jsonc              # Worker config: assets, AI, EMAIL, KV bindings
 ├── package.json
 ├── tsconfig.json
 ├── public/
 │   ├── fonts/                  # fraunces.woff2, fraunces-italic.woff2, montserrat.woff2
 │   ├── images/                 # profile, lifestyle photos, project covers, tool posters
 │   ├── cv/                     # resume PDF
-│   ├── favicon.svg · og-image.png · robots.txt · _redirects · _headers
-├── functions/
-│   └── api/
-│       ├── contact.ts          # Phase 1 — Turnstile verify → Resend
-│       ├── chat.ts             # Phase 2 — streaming chat via Vensix
-│       └── explain.ts          # Phase 2 — topic → explanation + Mermaid
+│   ├── ctf/                    # CTF challenge artifacts
+│   ├── sertif/                 # certificate PDFs
+│   ├── favicon.svg · og-image.png · robots.txt
+├── worker/
+│   ├── index.ts                # serves dist/ + /api/{contact,lead,chat,explain}
+│   └── lib/                    # validation, rate limiting, SSE, prompts, MIME
 ├── src/
 │   ├── content.config.ts       # Zod schemas for all collections
 │   ├── content/
@@ -299,13 +308,13 @@ Target layout after Phase 0 scaffolding:
 flowchart LR
   A[Content files<br/>MDX · TS data] --> B[astro build]
   S[Components · SCSS] --> B
-  B --> C[Static HTML/CSS/JS<br/>+ Pagefind index]
-  C --> D[Cloudflare Pages]
-  F[functions/api/*] --> D
+  B --> C[Static HTML/CSS/JS]
+  C --> D[Cloudflare Worker<br/>ksatriabintangsamudra]
+  F[worker/index.ts<br/>/api/*] --> D
   D --> E[ksatriabintangsamudra.com]
 ```
 
-Every push to a branch gets a Cloudflare preview URL; `main` is production.
+`npm run deploy` builds the static site and deploys the Worker. The `v2-astro` branch is the default and production branch.
 
 ### Contact form (Phase 1)
 
@@ -314,13 +323,14 @@ sequenceDiagram
   participant V as Visitor
   participant P as Page
   participant F as /api/contact
-  participant T as Turnstile
+  participant E as Email Routing
   participant R as Resend
   V->>P: Fill name · email · message
-  P->>F: POST form + Turnstile token
-  F->>T: Verify token
-  T-->>F: ok / fail
-  F->>R: Send email to owner (reply-to visitor)
+  P->>F: POST form + honeypot
+  F->>F: Validate + rate limit (KV)
+  F->>E: Send via Cloudflare Email Routing
+  E-->>F: ok
+  F->>R: Optional branded auto-reply
   R-->>F: 200
   F-->>P: { ok: true }
   P-->>V: Success state
@@ -396,42 +406,35 @@ Phase 1 has **no database** — everything is static except the contact form.
 
 | Endpoint | Method | Phase | Purpose | Storage |
 |----------|--------|-------|---------|---------|
-| `/api/contact` | POST | 1 | Verify Turnstile, send email via Resend | none |
-| `/api/chat` | POST (SSE) | 2 | Streamed answers grounded on site content | KV (rate limit), D1 (`leads`) |
+| `/api/contact` | POST | 1 | Honeypot + rate limit, send via Email Routing; optional Resend auto-reply | KV (rate limit) |
+| `/api/lead` | POST | 2 | Save chat/explainer leads | KV (90-day TTL) |
+| `/api/chat` | POST (SSE) | 2 | Streamed answers grounded on site content | KV (rate limit) |
 | `/api/explain` | POST | 2 | Topic → explanation + Mermaid diagram | KV (rate limit, cache) |
 
-**D1 `leads` table (Phase 2)**
+**KV `lead:*` records (Phase 2)**
 
-| Column | Type |
-|--------|------|
-| `id` | INTEGER PRIMARY KEY |
-| `name` | TEXT NOT NULL |
-| `contact` | TEXT NOT NULL (email or phone) |
-| `created_at` | TEXT (ISO 8601) |
-| `source` | TEXT (`chat` / `explain`) |
+Leads are stored in Cloudflare KV with a 90-day TTL. Each record contains `name`, `contact`, `country` and an ISO timestamp.
 
-All endpoints return `{ ok: boolean, error?: string }`, validate input with Zod, and never echo secrets.
+All endpoints return `{ ok: boolean, error?: string }`, validate input, and never echo secrets.
 
 ---
 
 ## 🔐 Environment Variables
 
-Set in **Cloudflare Pages → Settings → Variables and Secrets**. Locally, put them in `.dev.vars`
-(git-ignored). Never commit real values.
+Non-secret vars live in `wrangler.jsonc` → `vars`. Secrets are set with `wrangler secret put`. Locally, copy `.dev.vars.example` to `.dev.vars` (git-ignored). Never commit real values.
 
 | Variable | Phase | Scope | Description |
 |----------|-------|-------|-------------|
-| `PUBLIC_SITE_URL` | 1 | build | `https://ksatriabintangsamudra.com` |
-| `PUBLIC_TURNSTILE_SITE_KEY` | 1 | build (public) | Turnstile widget key |
-| `TURNSTILE_SECRET_KEY` | 1 | function secret | Server-side Turnstile verification |
-| `RESEND_API_KEY` | 1 | function secret | Sends contact-form email |
-| `CONTACT_TO_EMAIL` | 1 | function | Inbox that receives messages |
-| `CONTACT_FROM_EMAIL` | 1 | function | Verified sender on the new domain |
-| `VENSIX_API_KEY` | 2 | function secret | Gateway key (`sk-vsx-…`) |
-| `VENSIX_BASE_URL` | 2 | function | `https://vensix.biz.id/v1` |
-| `CHAT_MODEL` | 2 | function | Model id routed through Vensix |
-| `RATE_LIMIT` | 2 | KV binding | Per-IP / per-lead quotas |
-| `DB` | 2 | D1 binding | `leads` table |
+| `SITE_URL` | 1 | worker var | `https://ksatriabintangsamudra.com` |
+| `CONTACT_FROM` | 1 | worker var | Verified sender on the new domain |
+| `CONTACT_TO` | 1 | worker var | Inbox that receives messages |
+| `CHAT_MODEL` | 2 | worker var | Workers AI model id |
+| `EXPLAIN_MODEL` | 2 | worker var | Workers AI model id |
+| `RESEND_API_KEY` | 1 | worker secret | Optional branded auto-reply via Resend |
+| `AI` | 2 | binding | Workers AI (chat + explainer) |
+| `EMAIL` | 1 | binding | Cloudflare Email Routing (`send_email`) |
+| `KV` | 1+2 | binding | Rate limits, leads, explain cache |
+| `ASSETS` | 1 | binding | Static Astro build in `./dist` |
 
 A committed `.dev.vars.example` lists the names with empty values.
 
@@ -442,8 +445,8 @@ A committed `.dev.vars.example` lists the names with empty values.
 ### Prerequisites
 
 - Node.js **22 LTS** and npm
-- A Cloudflare account (for Pages, Turnstile, Functions)
-- `wrangler` (installed as a dev dependency) for running functions locally
+- A Cloudflare account (for Workers, Email Routing, KV, Workers AI)
+- `wrangler` (installed as a dev dependency) for local preview and deploys
 
 ### Commands
 
@@ -493,7 +496,7 @@ npm run test:e2e     # Playwright e2e + visual
 | Production domain | `ksatriabintangsamudra.com` (Cloudflare Registrar, registered 2026-09-25) |
 | `www` | 301 → apex |
 | Hosting | Cloudflare Worker `ksatriabintangsamudra` serving the static build (`npm run deploy`), branch `v2-astro` |
-| Old site | Retired: the React `main` branch and its GitHub Pages site are removed |
+| Old site | Retired: the React `main` branch was deleted from GitHub; local `main` is kept as a backup |
 
 ### Cutover checklist (end of Phase 1)
 
@@ -516,7 +519,8 @@ npm run test:e2e     # Playwright e2e + visual
 - [x] Scaffold Astro + TypeScript + SCSS + React integration on `v2-astro`
 - [x] Self-host fonts; implement `tokens.scss` / `global.scss` and the theme bootstrap
 - [x] Cloudflare Worker `ksatriabintangsamudra` deployed with custom domains (apex + www → apex)
-- [ ] CI: typecheck, build, Playwright smoke test
+- [x] CI: typecheck + build via GitHub Actions
+- [ ] Playwright smoke test in CI
 - [ ] Capture reference screenshots into `docs/reference/`
 
 ### Phase 1 — Core site (launch)
@@ -537,8 +541,9 @@ npm run test:e2e     # Playwright e2e + visual
 - [ ] Abuse tests and cost ceiling
 
 ### Phase 3 — Writing
-- [ ] Blog collection, post layout, RSS, tags
-- [ ] "From the notebook" home section (visible once ≥ 3 posts exist)
+- [x] Blog collection, post layout, RSS
+- [x] "From the notebook" home section
+- [ ] Tags & tag archive pages
 - [ ] Further hubs only with real content
 
 ---

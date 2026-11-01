@@ -84,6 +84,10 @@
   color: #1c1400;
   background: linear-gradient(120deg, #f6c453, #f59e0b);
 }
+.demo-card__badge.is-maintenance {
+  color: #1c1400;
+  background: linear-gradient(120deg, #f6c453, #f59e0b);
+}
 .demo-card__badge.is-demo { background: linear-gradient(120deg, #00cdac, #02aab0); }
 
 .demo-card__body {
@@ -247,6 +251,12 @@
   background: linear-gradient(120deg, #02aab0, #00cdac);
 }
 .demo-btn--primary:hover { transform: translateY(-2px); gap: 0.9rem; filter: brightness(1.08); text-decoration: none; color: #04121a; }
+.demo-btn--disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+  filter: grayscale(0.35);
+}
+.demo-btn--disabled:hover { transform: none; filter: grayscale(0.35); }
 .demo-btn--ghost {
   color: #02aab0;
   border: 1px solid rgba(2, 170, 176, 0.4);

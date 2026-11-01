@@ -7,7 +7,7 @@ export interface PlaygroundTool {
   href: string;
   poster: string;
   emoji: string;
-  badge?: 'Live' | 'New';
+  badge?: 'Live' | 'New' | 'Maintenance';
   ctaLabel?: string;
   login?: { email: string; password: string };
 }
@@ -154,12 +154,11 @@ export const playground: Playground = {
           title: 'VenWave',
           meta: 'Music · Next.js',
           desc: 'A full music-streaming app — multi-source catalogue, gapless player, live visualiser, and a dashboard that learns your taste on each visit.',
-          href: 'https://venwave.ksatriabintangsamudra.com',
+          href: '/demos/',
           poster: '/images/tools/venwave.jpg',
           emoji: '🎧',
-          badge: 'Live',
-          ctaLabel: 'Check the demo',
-          login: { email: 'demo@ksatriabintangsamudra.com', password: 'VenWaveDemo2026' },
+          badge: 'Maintenance',
+          ctaLabel: 'See status',
         },
       ],
     },
