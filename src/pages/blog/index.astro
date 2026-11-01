@@ -7,7 +7,9 @@ import { getPosts, postSlug, formatDate } from '../../components/blog/posts';
 import '../../styles/pages/_tool-page.scss';
 import '../../styles/pages/_blog.scss';
 
-const posts = await getPosts();
+const allPosts = await getPosts();
+const posts = allPosts.slice(0, 12);
+const remaining = allPosts.length - posts.length;
 const firstCover = posts[0]?.data.cover;
 const preloadCover = firstCover ? firstCover.replace(/\.jpe?g$/i, '.webp') : undefined;
 const blogUrl = new URL('/blog/', site.url).toString();
@@ -53,36 +55,47 @@ const jsonLd = {
       {posts.length === 0 ? (
         <p class="blog-empty">First posts landing soon.</p>
       ) : (
-        <div class="blog-list">
-          {posts.map((post, index) => (
-            <a class="blog-card" href={`/blog/${postSlug(post)}/`}>
-              {post.data.cover && (
-                <div class="blog-card__thumb">
-                  <OptimizedImage
-                    src={post.data.cover}
-                    alt=""
-                    width={480}
-                    height={300}
-                    loading={index === 0 ? 'eager' : 'lazy'}
-                    fetchpriority={index === 0 ? 'high' : 'auto'}
-                  />
+        <>
+          <div class="blog-list">
+            {posts.map((post, index) => (
+              <a class="blog-card" href={`/blog/${postSlug(post)}/`}>
+                {post.data.cover && (
+                  <div class="blog-card__thumb">
+                    <OptimizedImage
+                      src={post.data.cover}
+                      alt=""
+                      width={480}
+                      height={300}
+                      loading={index === 0 ? 'eager' : 'lazy'}
+                      fetchpriority={index === 0 ? 'high' : 'auto'}
+                    />
+                  </div>
+                )}
+                <div class="blog-card__text">
+                  <div class="blog-card__meta">
+                    <span class="blog-card__cat">{post.data.category}</span>
+                    <span class="blog-card__dot" aria-hidden="true">·</span>
+                    <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+                    <span class="blog-card__dot" aria-hidden="true">·</span>
+                    <span>{post.data.readingMinutes} min read</span>
+                  </div>
+                  <h2 class="blog-card__title">{post.data.title}</h2>
+                  <p class="blog-card__desc">{post.data.description}</p>
+                  <span class="blog-card__more">Read <Icon name="arrow-right" size={15} /></span>
                 </div>
-              )}
-              <div class="blog-card__text">
-                <div class="blog-card__meta">
-                  <span class="blog-card__cat">{post.data.category}</span>
-                  <span class="blog-card__dot" aria-hidden="true">·</span>
-                  <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
-                  <span class="blog-card__dot" aria-hidden="true">·</span>
-                  <span>{post.data.readingMinutes} min read</span>
-                </div>
-                <h2 class="blog-card__title">{post.data.title}</h2>
-                <p class="blog-card__desc">{post.data.description}</p>
-                <span class="blog-card__more">Read <Icon name="arrow-right" size={15} /></span>
-              </div>
-            </a>
-          ))}
-        </div>
+              </a>
+            ))}
+          </div>
+          {remaining > 0 && (
+            <div class="blog-view-all">
+              <a class="blog-view-all__link" href="/blog/all/">
+                View all {allPosts.length} posts
+                <Icon name="arrow-right" size={16} />
+              </a>
+              <p class="blog-view-all__note">{remaining} more notes in the archive.</p>
+            </div>
+          )}
+        </>
       )}
     </div>
   </main>

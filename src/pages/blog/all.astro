@@ -1,0 +1,88 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/ui/Icon.astro';
+import OptimizedImage from '../../components/ui/OptimizedImage.astro';
+import { site } from '../../data/site';
+import { getPosts, postSlug, formatDate } from '../../components/blog/posts';
+import '../../styles/pages/_tool-page.scss';
+import '../../styles/pages/_blog.scss';
+
+const posts = await getPosts();
+const blogUrl = new URL('/blog/all/', site.url).toString();
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  '@id': blogUrl,
+  name: `All posts — ${site.name}`,
+  url: blogUrl,
+  inLanguage: 'en',
+  author: { '@id': `${site.url}/#person` },
+  blogPost: posts.map((p) => ({
+    '@type': 'BlogPosting',
+    headline: p.data.title,
+    url: new URL(`/blog/${postSlug(p)}/`, site.url).toString(),
+    datePublished: p.data.date.toISOString(),
+    ...(p.data.cover ? { image: new URL(p.data.cover, site.url).toString() } : {}),
+  })),
+};
+---
+
+<BaseLayout
+  title="All posts"
+  description="Every note from Ksatria Bintang Samudra on AI-augmented engineering, LLM infrastructure, payments and shipping real software from Indonesia."
+  jsonLd={jsonLd}
+>
+  <main class="tool-page">
+    <div class="tool-page__container tool-page__container--wide">
+      <nav class="tool-page__breadcrumb" aria-label="Breadcrumb">
+        <ol class="tool-page__breadcrumb-list">
+          <li><a href="/">Home</a></li>
+          <li aria-hidden="true">›</li>
+          <li><a href="/blog/">Notebook</a></li>
+          <li aria-hidden="true">›</li>
+          <li>All posts</li>
+        </ol>
+      </nav>
+
+      <header class="tool-page__header">
+        <h1>All posts</h1>
+        <p>Every note on AI-augmented engineering, LLM infrastructure and shipping real software — drawn from things I actually built.</p>
+      </header>
+
+      {posts.length === 0 ? (
+        <p class="blog-empty">First posts landing soon.</p>
+      ) : (
+        <div class="blog-list">
+          {posts.map((post, index) => (
+            <a class="blog-card" href={`/blog/${postSlug(post)}/`}>
+              {post.data.cover && (
+                <div class="blog-card__thumb">
+                  <OptimizedImage
+                    src={post.data.cover}
+                    alt=""
+                    width={480}
+                    height={300}
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    fetchpriority={index === 0 ? 'high' : 'auto'}
+                  />
+                </div>
+              )}
+              <div class="blog-card__text">
+                <div class="blog-card__meta">
+                  <span class="blog-card__cat">{post.data.category}</span>
+                  <span class="blog-card__dot" aria-hidden="true">·</span>
+                  <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+                  <span class="blog-card__dot" aria-hidden="true">·</span>
+                  <span>{post.data.readingMinutes} min read</span>
+                </div>
+                <h2 class="blog-card__title">{post.data.title}</h2>
+                <p class="blog-card__desc">{post.data.description}</p>
+                <span class="blog-card__more">Read <Icon name="arrow-right" size={15} /></span>
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </main>
+</BaseLayout>
