@@ -1,0 +1,40 @@
+---
+title: AgroTrack
+summary: Attendance, payroll and operational management for palm-oil plantations and mills — employee mobile app, company web panel, and a Super Admin portal for multi-company management. Built with Laravel, Filament and Flutter.
+category: mobile
+metric: Plantation operations
+tags: [Laravel, Filament, Flutter, PostgreSQL, HRIS]
+cover:
+  gradient: ['#1a2e1a', '#16a34a']
+  icon: globe
+links: {}
+status: Demo with sample data
+year: 2026
+metrics:
+  - label: User roles
+    value: 5
+  - label: Core modules
+    value: 7
+  - label: Companies supported
+    value: 10
+    suffix: '+'
+stack: [Laravel 12, Filament, Flutter, PostgreSQL, Tailwind CSS]
+featured: false
+order: 10
+---
+
+## The Challenge
+
+Palm-oil plantations and mills in Indonesia manage hundreds of workers across vast areas with limited connectivity. Attendance is tracked on paper, payroll is calculated manually, and operational reports are scattered across WhatsApp and spreadsheets. I wanted a single system that handles attendance, payroll and daily operations for plantation companies, with a mobile app for field workers and a web panel for management.
+
+## My Approach
+
+AgroTrack is built around three interfaces: a **Flutter mobile app** for employees to clock in, view schedules and check payslips; a **Laravel + Filament web panel** for HR and managers to manage attendance, payroll and operations; and a **Super Admin portal** for overseeing multiple companies from one dashboard. The system uses PostgreSQL for reliable transactional data and supports offline-capable attendance with sync when connectivity returns.
+
+## The Design
+
+Field-ready and role-based. The mobile app has large touch targets, offline forms and clear typography for outdoor use. The web panel provides dashboards for attendance trends, payroll summaries and operational KPIs. The Super Admin portal lets me manage multiple plantation companies with isolated data and role-based access control.
+
+## The Results
+
+A working demo with sample data covering the full plantation workflow — from employee attendance to payroll processing and operational reports. The system supports five user roles (employee, supervisor, HR, manager, super admin) and seven core modules. AgroTrack is designed for Indonesian plantation companies that need practical, offline-tolerant HRIS without enterprise complexity.

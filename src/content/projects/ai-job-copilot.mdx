@@ -1,0 +1,40 @@
+---
+title: AI Job Application Copilot
+summary: A personal AI copilot for job applications — paste a job description, get a fit analysis, tailored resume, cover letter and recruiter outreach, all using real profile data. Built with Next.js and LLM integration.
+category: ai-automation
+metric: AI-powered job hunting
+tags: [Next.js, AI Integration, LLM, Resume Builder]
+cover:
+  gradient: ['#0f0f1a', '#06b6d4']
+  icon: bot
+links: {}
+status: Live · in active development
+year: 2026
+metrics:
+  - label: Output formats
+    value: 4
+  - label: Profile data points
+    value: 50
+    suffix: '+'
+  - label: Prompt templates
+    value: 6
+stack: [Next.js (App Router), TypeScript, LLM APIs, Tailwind CSS, Zod]
+featured: false
+order: 9
+---
+
+## The Challenge
+
+Job hunting is repetitive and time-consuming. Every application needs a tailored resume, a custom cover letter, and a thoughtful recruiter message — all while staying truthful to your actual experience. I wanted an AI copilot that could generate all of that from a single job description, using my real profile data so nothing is invented or exaggerated.
+
+## My Approach
+
+The copilot takes a job description as input and runs it through a series of LLM prompts. First, it analyzes the fit between the role and my actual skills, projects and experience. Then it generates a tailored resume highlighting the most relevant work, a cover letter that connects my background to the company's needs, and a short recruiter outreach message. All outputs are grounded in a single source of truth — my real profile data — so every claim is verifiable.
+
+## The Design
+
+Clean, focused and built for speed. A single-page interface with a large textarea for the job description, a fit-analysis panel, and tabs for resume, cover letter and outreach. Each output is editable before copying or downloading. The app uses a structured profile schema so the AI never invents credentials, and all generated text is clearly marked as a draft for review.
+
+## The Results
+
+A working AI copilot that turns a job description into four ready-to-use outputs in under a minute. Built with Next.js App Router and TypeScript, with a structured prompt pipeline that keeps outputs consistent and truthful. The tool is actively used for my own job applications and is continuously improved based on real recruiter feedback.

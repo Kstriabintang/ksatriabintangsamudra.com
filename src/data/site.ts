@@ -15,7 +15,7 @@ export const site = {
   kicker: 'Ksatria Bintang Samudra · Product Engineer · Pontianak',
   headline: { lead: 'Production systems,', em: 'shipped', tail: '.' },
   availability: 'Open to remote work',
-  proof: ['15+ live products', '39 public repos', 'QRIS-native payments'],
+  proof: ['22+ shipped products', '42 public repos', 'QRIS-native payments'],
   footerTagline: 'Shipping real systems from the equator.',
   footerNote: 'Designed, built and shipped in Pontianak, Indonesia.',
   socials: {

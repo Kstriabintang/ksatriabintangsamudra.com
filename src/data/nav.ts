@@ -41,7 +41,7 @@ export const navGroups: NavGroup[] = [
       { label: 'Services', desc: 'What I build for clients', href: '/services/', icon: 'briefcase' },
       { label: 'Hire Me', desc: 'Availability & how to hire', href: '/hire-me/', icon: 'mail' },
       { label: 'Resume', desc: 'Experience & credentials', href: '/resume/', icon: 'file' },
-      { label: 'GitHub', desc: '39 public repositories', href: 'https://github.com/Kstriabintang', icon: 'github', external: true },
+      { label: 'GitHub', desc: '42 public repositories', href: 'https://github.com/Kstriabintang', icon: 'github', external: true },
     ],
   },
   {
