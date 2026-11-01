@@ -1,6 +1,7 @@
 ---
 import '../styles/pages/_demos.scss';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import OptimizedImage from '../components/ui/OptimizedImage.astro';
 import { demos } from '../data/demos';
 
 const statusClass = (s: string) =>
@@ -47,7 +48,15 @@ const jsonLd = {
               <article class="demo-card">
                 <div class="demo-card__art">
                   <span class="demo-card__fallback" aria-hidden="true">{d.emoji}</span>
-                  <img class="demo-card__img" src={d.poster} alt={`${d.title} screenshot`} width="800" height="500" loading="lazy" decoding="async" />
+                  <OptimizedImage
+                    src={d.poster}
+                    alt={`${d.title} screenshot`}
+                    width={800}
+                    height={500}
+                    loading={band.name === 'Products & apps' && band.items.indexOf(d) === 0 ? 'eager' : 'lazy'}
+                    fetchpriority={band.name === 'Products & apps' && band.items.indexOf(d) === 0 ? 'high' : 'auto'}
+                    class="demo-card__img"
+                  />
                   <span class={`demo-card__badge ${statusClass(d.status)}`}>{d.status}</span>
                 </div>
 

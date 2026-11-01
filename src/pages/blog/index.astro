@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/ui/Icon.astro';
+import OptimizedImage from '../../components/ui/OptimizedImage.astro';
 import { site } from '../../data/site';
 import { getPosts, postSlug, formatDate } from '../../components/blog/posts';
 import '../../styles/pages/_tool-page.scss';
@@ -50,11 +51,18 @@ const jsonLd = {
         <p class="blog-empty">First posts landing soon.</p>
       ) : (
         <div class="blog-list">
-          {posts.map((post) => (
+          {posts.map((post, index) => (
             <a class="blog-card" href={`/blog/${postSlug(post)}/`}>
               {post.data.cover && (
                 <div class="blog-card__thumb">
-                  <img src={post.data.cover} alt="" width="480" height="300" loading="lazy" decoding="async" />
+                  <OptimizedImage
+                    src={post.data.cover}
+                    alt=""
+                    width={480}
+                    height={300}
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    fetchpriority={index === 0 ? 'high' : 'auto'}
+                  />
                 </div>
               )}
               <div class="blog-card__text">
