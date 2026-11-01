@@ -26,10 +26,12 @@ const SECURITY: Record<string, string> = {
   'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
 };
 
-/** Long-lived caching for fingerprinted build output and fonts. */
+/** Long-lived caching for fingerprinted build output and static assets. */
 export function cacheControlFor(pathname: string): string | null {
   if (pathname.startsWith('/_astro/') || pathname.startsWith('/fonts/')) return 'public, max-age=31536000, immutable';
+  if (pathname.startsWith('/images/') || pathname.startsWith('/sertif/') || pathname.startsWith('/ctf/') || pathname.startsWith('/cv/')) return 'public, max-age=2592000';
   if (pathname.startsWith('/api/')) return 'no-store';
+  if (pathname.endsWith('.xml') || pathname.endsWith('.json') || pathname.endsWith('.txt')) return 'public, max-age=3600';
   return null;
 }
 
