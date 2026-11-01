@@ -16,6 +16,8 @@ interface Props {
   noindex?: boolean;
   /** Lock pinch/double-tap zoom — only for app-like interactive pages (e.g. the game). */
   lockZoom?: boolean;
+  /** Preload the LCP image to speed up the largest contentful paint. */
+  preloadImage?: string;
 }
 
 const {
@@ -26,6 +28,7 @@ const {
   jsonLd,
   noindex = false,
   lockZoom = false,
+  preloadImage,
 } = Astro.props;
 
 const viewportContent = lockZoom
@@ -127,6 +130,7 @@ const ldBlocks = [personLd, orgLd, websiteLd, ...(jsonLd ? (Array.isArray(jsonLd
     <link rel="preload" href="/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/fraunces-italic.woff2" as="font" type="font/woff2" crossorigin />
+    {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
 
     <script is:inline>
       (() => {

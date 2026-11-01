@@ -15,6 +15,8 @@ import {
 import { site } from '../../data/site';
 
 const projects = await getProjects();
+const firstPoster = projects[0] ? projectPoster(projects[0]) : undefined;
+const preloadPoster = firstPoster ? firstPoster.replace(/\.jpe?g$/i, '.webp') : undefined;
 const used = new Set(projects.map((p) => p.data.category));
 const filters = filterOrder.filter((c) => used.has(c));
 
@@ -41,6 +43,7 @@ const itemListLd = {
   title="Projects"
   description="Selected work across AI & automation, web, mobile and security — every project with a full case study."
   jsonLd={itemListLd}
+  preloadImage={preloadPoster}
 >
   <section class="tools-page projects-index">
     <div class="tools-page__container">

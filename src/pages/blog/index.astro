@@ -8,6 +8,8 @@ import '../../styles/pages/_tool-page.scss';
 import '../../styles/pages/_blog.scss';
 
 const posts = await getPosts();
+const firstCover = posts[0]?.data.cover;
+const preloadCover = firstCover ? firstCover.replace(/\.jpe?g$/i, '.webp') : undefined;
 const blogUrl = new URL('/blog/', site.url).toString();
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -31,6 +33,7 @@ const jsonLd = {
   title="Notebook"
   description="Writing by Ksatria Bintang Samudra on AI-augmented engineering, LLM infrastructure, payments and shipping real software from Indonesia."
   jsonLd={jsonLd}
+  preloadImage={preloadCover}
 >
   <main class="tool-page">
     <div class="tool-page__container tool-page__container--wide">
