@@ -7,6 +7,7 @@ interface Props {
   loading?: 'lazy' | 'eager';
   fetchpriority?: 'high' | 'low' | 'auto';
   class?: string;
+  sizes?: string;
 }
 
 const {
@@ -17,6 +18,7 @@ const {
   loading = 'lazy',
   fetchpriority = 'auto',
   class: className = '',
+  sizes = '(max-width: 768px) 100vw, 480px',
 } = Astro.props;
 
 const webpSrc = src.replace(/\.jpe?g$/i, '.webp');
@@ -30,12 +32,12 @@ const tinyWebpSrc = src.replace(/\.jpe?g$/i, '-tiny.webp');
   <source
     type="image/webp"
     srcset={`${tinyWebpSrc} 342w, ${smallWebpSrc} 480w, ${webpSrc} 1280w`}
-    sizes="(max-width: 768px) 100vw, 480px"
+    sizes={sizes}
   />
   <source
     type="image/jpeg"
     srcset={`${tinySrc} 342w, ${smallSrc} 480w, ${src} 1280w`}
-    sizes="(max-width: 768px) 100vw, 480px"
+    sizes={sizes}
   />
   <img
     src={tinySrc}
