@@ -1,0 +1,40 @@
+---
+title: VenWave
+summary: A full music-streaming app — multi-source catalogue, gapless player, live visualiser, and a dashboard that learns your taste per visit. Built with Next.js 15, Prisma and Postgres.
+category: web
+metric: Music, personalised
+tags: [Next.js 15, Prisma, Postgres, Music streaming]
+cover:
+  gradient: ['#0f0f1a', '#7c3aed']
+  icon: atom
+links:
+  live: https://venwave.ksatriabintangsamudra.com
+status: In maintenance — back online soon
+year: 2026
+metrics:
+  - label: Audio sources
+    value: 3
+  - label: Player modes
+    value: 4
+  - label: Personalisation signals
+    value: 12
+stack: [Next.js 15 (App Router), TypeScript, Prisma, PostgreSQL, Tailwind CSS, Web Audio API]
+featured: false
+order: 5
+---
+
+## The Challenge
+
+Most music apps either lock you into one catalogue or overwhelm you with choices. I wanted a single player that could pull from multiple sources, play without gaps between tracks, and actually learn what you like — not just what you clicked once. The goal was a streaming experience that feels personal from the first visit, built entirely on the web with no native app required.
+
+## My Approach
+
+VenWave is built around three ideas: a **unified catalogue**, a **gapless engine**, and a **taste model**. The catalogue aggregates tracks from multiple sources into one searchable library with deduplication and source priority. The player uses the Web Audio API for true gapless playback, crossfade, and a real-time visualiser that reacts to frequency data. Every listen, skip, like and replay feeds a lightweight preference model stored per user, so the dashboard surfaces more of what you actually want to hear.
+
+## The Design
+
+Dark, immersive and focused on the music. A full-width player with album art, waveform visualiser and keyboard shortcuts. The dashboard adapts per visit — recently played, suggested based on your skips, and a "because you liked" rail that updates as the taste model learns. Responsive from phone to desktop, with touch-friendly controls and a collapsible queue.
+
+## The Results
+
+A working music-streaming app with multi-source search, gapless playback, live visualisation and a personalisation engine that improves with every session. Built with Next.js 15 App Router, Prisma and Postgres for type-safe data access. Currently in maintenance while moving to a new always-on server; the case study and demo will be back online soon.

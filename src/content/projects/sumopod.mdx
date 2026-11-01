@@ -1,0 +1,40 @@
+---
+title: SumoPod
+summary: An API marketplace for Indonesian public data — hospitals, schools, universities and administrative regions, with a freemium model, usage analytics and developer-friendly documentation.
+category: ai-automation
+metric: Data as a service
+tags: [API Platform, Data Engineering, Freemium, Indonesia]
+cover:
+  gradient: ['#0f172a', '#3b82f6']
+  icon: layers
+links: {}
+status: In development — expanding API catalogue
+year: 2026
+metrics:
+  - label: Live APIs
+    value: 4
+  - label: Free tier requests
+    value: 5000
+  - label: Rate limit
+    value: 60
+    suffix: '/min'
+stack: [Next.js, TypeScript, PostgreSQL, Cloudflare Workers, KV, Zod]
+featured: false
+order: 7
+---
+
+## The Challenge
+
+Indonesian developers building apps for education, health or local government often need reliable public data — hospital directories, school registries, university lists, administrative regions. That data exists, but it's scattered across PDFs, outdated websites and inconsistent formats. I wanted to turn that fragmented information into clean, documented APIs that any developer can use in minutes, with a freemium model that keeps basic access free.
+
+## My Approach
+
+SumoPod normalises public datasets into a consistent API format. Each endpoint returns paginated, searchable results with stable IDs and provenance metadata. The platform includes a developer dashboard with API keys, usage analytics, rate limiting and a subscription system. The free tier offers 5,000 requests per month per API with 60 requests per minute — enough for prototyping and small apps. Paid tiers unlock higher limits and priority support.
+
+## The Design
+
+Developer-first and documentation-driven. A clean dashboard with quick-start guides, interactive API testing and clear error messages. The API explorer lets developers try endpoints directly in the browser before writing any code. Every response follows a consistent JSON schema, with pagination, filtering and sorting built in. The goal is to make integrating Indonesian public data as easy as calling any modern REST API.
+
+## The Results
+
+A working API marketplace with four live APIs: Indonesia Hospital API, Indonesia School API, Indonesia University API and Indonesia Regional API. Each API serves validated local snapshots with provenance tracking. The freemium model is live, with usage analytics and rate limiting per key. Next steps include expanding the catalogue to more public datasets and adding webhook notifications for data updates.

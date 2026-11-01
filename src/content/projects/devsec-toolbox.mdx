@@ -1,0 +1,41 @@
+---
+title: DevSec Toolbox
+summary: A full DevSecOps suite — 62 tools. On-device utilities plus live edge scanners for dependency CVEs, website, TLS, DNS and WHOIS, with an AI explainer and a 270+ tool DevSecOps Arsenal.
+category: security
+metric: 62 tools
+tags: [DevSecOps, Cloudflare Workers, Security scanners, Developer tools]
+cover:
+  gradient: ['#0f0f1a', '#f59e0b']
+  icon: wrench
+links:
+  live: https://devsec.ksatriabintangsamudra.com
+status: Live
+year: 2026
+metrics:
+  - label: Tools
+    value: 62
+  - label: Arsenal tools
+    value: 270
+    suffix: '+'
+  - label: Scanner types
+    value: 8
+stack: [Cloudflare Workers, TypeScript, OSV API, DNS-over-HTTPS, TLS analysis, AI explainer]
+featured: false
+order: 8
+---
+
+## The Challenge
+
+Developers and security engineers waste time jumping between dozens of small tools: one site for JWT decoding, another for hashing, another for dependency scanning, another for DNS or TLS checks. Many of those tools send sensitive data to unknown servers. I wanted a single, privacy-first toolbox that covers the daily DevSecOps workflow — on-device utilities for sensitive operations and live edge scanners for external checks — without sign-ups, ads or data collection.
+
+## My Approach
+
+DevSec Toolbox splits tools into two categories: **on-device** and **live edge**. On-device tools (JWT, AES, hashing, JSON, Base64, UUID) run entirely in the browser, so secrets never leave the user's machine. Live scanners (dependency CVEs via OSV, website security headers, TLS certificates, DNS records, WHOIS) run on Cloudflare Workers for fast, globally distributed responses. An AI explainer helps users understand scanner results in plain language, and the 270+ tool DevSecOps Arsenal links to curated external tools for deeper workflows.
+
+## The Design
+
+Fast, keyboard-friendly and privacy-first. A searchable tool grid with categories, favourites and recent tools. Each tool has a consistent interface: input on the left, output on the right, with copy and download actions. Scanner results show severity badges, remediation hints and raw data for power users. The AI explainer translates technical findings into actionable advice without requiring security expertise.
+
+## The Results
+
+A live DevSecOps suite with 62 tools covering encoding, encryption, scanning and analysis. On-device tools keep sensitive data local; live scanners return results in under a second from Cloudflare's edge. The Arsenal adds 270+ curated external tools for specialised needs. DevSec Toolbox is free, requires no account, and is built for developers who need reliable security utilities without compromising privacy.

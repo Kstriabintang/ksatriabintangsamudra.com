@@ -1,0 +1,40 @@
+---
+title: PalmTrack
+summary: A palm-oil plantation and weighbridge manager for Indonesian growers — weighing, harvests, workers and finance in one place, with a satellite plot map. Built with React, Vite and Laravel 12.
+category: web
+metric: Field to finance
+tags: [React, Vite, Laravel 12, PostgreSQL, Plantation SaaS]
+cover:
+  gradient: ['#1a2e1a', '#16a34a']
+  icon: globe
+links:
+  live: https://palmtrack.ksatriabintangsamudra.com
+status: In development — UI demo with sample data
+year: 2026
+metrics:
+  - label: Core modules
+    value: 6
+  - label: Worker roles
+    value: 4
+  - label: Report types
+    value: 8
+stack: [React 19, Vite, TypeScript, Laravel 12, PostgreSQL, Tailwind CSS, Leaflet]
+featured: false
+order: 6
+---
+
+## The Challenge
+
+Small and mid-size palm-oil plantations in Indonesia still run on paper logs, WhatsApp photos and manual spreadsheets. Weighbridge tickets get lost, harvest records don't match payroll, and owners can't see which plots are productive without driving around all day. I wanted one system that connects the field to the office — weighing, harvests, workers and finance — without requiring expensive enterprise software or constant internet.
+
+## My Approach
+
+PalmTrack is designed around the weighbridge as the source of truth. Every truck load is recorded with weight, plot, driver and timestamp, then flows into harvest reports, worker payroll and owner dashboards. A satellite plot map lets owners see exactly where each harvest came from, with colour-coded productivity per plot. The UI is built for low-bandwidth conditions: fast initial load, offline-tolerant forms, and clear typography for outdoor use.
+
+## The Design
+
+Functional and field-ready. A dashboard with today's weight, active workers and pending payroll. The weighbridge module works on tablet and phone, with large touch targets and a camera shortcut for ticket photos. The plot map uses Leaflet with satellite imagery, so owners can tap a plot and see its full history. Reports export to PDF and Excel for bank or cooperative requirements.
+
+## The Results
+
+A working UI demo with sample data covering the full plantation workflow — from weighbridge entry to payroll and owner reports. The Laravel 12 backend is in active development, with PostgreSQL for reliable transactional data and role-based access for owners, weighbridge operators, field supervisors and accountants. PalmTrack is built for Indonesian growers who need practical software, not another enterprise suite.
