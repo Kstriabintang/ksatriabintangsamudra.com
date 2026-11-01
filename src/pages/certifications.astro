@@ -40,7 +40,7 @@ import '../styles/pages/_certifications.scss';
               const image = c.file.replace('/sertif/', '/images/certs/').replace('.pdf', '.jpg');
               return (
                 <article class="cred-card spotlight-card">
-                  <a class="cred-card__thumb" href={c.file} target="_blank" rel="noopener" aria-label={`View ${c.title} certificate`}>
+                  <a class="cred-card__thumb" href={c.file} target="_blank" rel="noopener" aria-label={`${c.title} — ${c.kind} — view certificate`}>
                     <img src={image} alt={`${c.title} — ${c.issuer}`} width="820" height="512" loading="lazy" decoding="async" />
                     <span class="cred-card__kind" style={`--cred-accent:${c.accent}`}>{c.kind}</span>
                     <span class="cred-card__zoom"><Icon name="arrow-up-right" size={16} /></span>

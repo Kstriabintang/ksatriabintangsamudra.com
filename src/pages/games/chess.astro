@@ -7,7 +7,6 @@ import '../../styles/pages/_chess.scss';
 <BaseLayout
   title="Chess vs Claude — a 3D chess game"
   description="Play 3D chess against Claude, an AI opponent with Easy, Medium and Expert levels. Tap to move, right in your browser — built by Ksatria Bintang Samudra."
-  lockZoom
 >
   <main class="tool-page chess-page">
     <div class="tool-page__container">
@@ -23,13 +22,13 @@ import '../../styles/pages/_chess.scss';
         </div>
       </header>
 
-      <div class="chess__captured chess__captured--ai" data-captured-ai aria-label="Pieces Claude captured"></div>
+      <div class="chess__captured chess__captured--ai" data-captured-ai role="img" aria-label="Pieces Claude captured"></div>
 
       <div class="chess__stage">
         <div class="chess__board" data-board></div>
       </div>
 
-      <div class="chess__captured chess__captured--me" data-captured-me aria-label="Pieces you captured"></div>
+      <div class="chess__captured chess__captured--me" data-captured-me role="img" aria-label="Pieces you captured"></div>
 
       <div class="chess__controls">
         <button class="chess__btn chess__btn--primary" type="button" data-new>New game</button>
@@ -88,6 +87,8 @@ import '../../styles/pages/_chess.scss';
           if (selected === sq) cell.classList.add('sq--selected');
           if (targets.includes(sq)) cell.classList.add('sq--target');
           const p = b[r][f];
+          const pieceName = p ? `${p.color === 'w' ? 'White' : 'Black'} ${p.type}` : 'Empty';
+          cell.setAttribute('aria-label', `${sq}: ${pieceName}`);
           if (p) {
             const span = document.createElement('span');
             span.className = `pc pc--${p.color}` + (targets.includes(sq) ? ' pc--capture' : '');

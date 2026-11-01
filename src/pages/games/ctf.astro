@@ -213,7 +213,7 @@ const catWords = cats.filter((c) => c !== 'ALL').map((c) => c.toLowerCase()).joi
           <div class="ctf-cert__claim-row">
             <input id="ctf-cert-name" class="ctf-cert__claim-input" type="text" maxlength="42" autocomplete="name" placeholder="Your full name" />
             <button class="ctf-cert__claim-btn" type="button" data-cert-gen>Generate</button>
-            <a class="ctf-cert__dl" data-cert-dl hidden download="kbs-lab-ctf-certificate.png">Download PNG ↓</a>
+            <button class="ctf-cert__dl" type="button" data-cert-dl hidden>Download PNG ↓</button>
           </div>
           <p class="ctf-cert__disclaimer">A practice certificate — not an accredited credential. Issued for motivation, under the honor code above (no AI, no shared solutions).</p>
         </div>
@@ -349,7 +349,7 @@ const catWords = cats.filter((c) => c !== 'ALL').map((c) => c.toLowerCase()).joi
       const claimEl = document.querySelector('[data-cert-claim]') as HTMLElement;
       const nameInput = document.getElementById('ctf-cert-name') as HTMLInputElement;
       const genBtn = document.querySelector('[data-cert-gen]') as HTMLButtonElement;
-      const dlLink = document.querySelector('[data-cert-dl]') as HTMLAnchorElement;
+      const dlLink = document.querySelector('[data-cert-dl]') as HTMLButtonElement;
       const W = 1400, H = 990;
 
       const niceDate = () => new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -486,8 +486,15 @@ const catWords = cats.filter((c) => c !== 'ALL').map((c) => c.toLowerCase()).joi
         const pts = solved.reduce((a, c) => a + Number(c.dataset.pts || 0), 0);
         const nm = (nameInput.value || 'Anonymous').trim().slice(0, 42) || 'Anonymous';
         await draw(nm, solved.length, pts, false);
-        dlLink.href = certCanvas.toDataURL('image/png');
         dlLink.hidden = false;
+        dlLink.onclick = () => {
+          const a = document.createElement('a');
+          a.href = certCanvas.toDataURL('image/png');
+          a.download = 'kbs-lab-ctf-certificate.png';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        };
       });
     }
   </script>

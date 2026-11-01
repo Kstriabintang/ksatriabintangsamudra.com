@@ -11,7 +11,6 @@ const keyRows = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
 <BaseLayout
   title="Termle — a daily tech Wordle"
   description="Termle: guess the 5-letter tech word in six tries. A new word every day, built by Ksatria Bintang Samudra. Share your result."
-  lockZoom
 >
   <main class="tool-page termle-page">
     <div class="tool-page__container">
@@ -39,9 +38,9 @@ const keyRows = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
       <div class="termle__keyboard" data-tm-kb>
         {keyRows.map((row, i) => (
           <div class="termle__kbrow">
-            {i === 2 && <button class="termle__key termle__key--wide" data-tm-key="Enter">Enter</button>}
+            {i === 2 && <button class="termle__key termle__key--wide" data-tm-key="Enter" aria-label="Submit guess">Enter</button>}
             {row.split('').map((k) => (
-              <button class="termle__key" data-tm-key={k}>{k}</button>
+              <button class="termle__key" data-tm-key={k} aria-label={`Letter ${k}`}>{k}</button>
             ))}
             {i === 2 && <button class="termle__key termle__key--wide" data-tm-key="Backspace" aria-label="Backspace">⌫</button>}
           </div>

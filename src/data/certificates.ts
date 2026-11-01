@@ -42,6 +42,22 @@ export const credentialGroups: CredentialGroup[] = [
     ],
   },
   {
+    heading: 'Competitions',
+    blurb: 'Capture-the-flag and security competitions entered as a competitor.',
+    items: [
+      {
+        title: 'DEADFACE CTF 2026 — Competitor',
+        issuer: 'DEADFACE',
+        kind: 'Certificate',
+        year: 'Oct 2026',
+        file: '/sertif/deadface-ctf-2026.pdf',
+        note: 'Participated as a competitor in the DEADFACE CTF 2026 security competition.',
+        initials: 'DF',
+        accent: '#8b5cf6',
+      },
+    ],
+  },
+  {
     heading: 'Assessments & proficiency',
     blurb: 'Completion and proficiency records — labelled for exactly what they are.',
     items: [
