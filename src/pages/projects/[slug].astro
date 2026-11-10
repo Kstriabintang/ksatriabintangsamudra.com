@@ -28,6 +28,8 @@ interface Props {
 const { project, all } = Astro.props;
 const d = project.data;
 const mod = categoryModifier[d.category];
+// When the project has a real screenshot, its own 1200×630 share image; otherwise the site default.
+const ogImage = projectPoster(project) ? `/images/shots/${project.id}/og.jpg` : undefined;
 const sections = caseSections(project.body);
 
 const related = [
@@ -127,7 +129,7 @@ const jsonLd = [
 ];
 ---
 
-<BaseLayout title={`${d.title} — Case Study`} description={d.summary} type="article" jsonLd={jsonLd}>
+<BaseLayout title={`${d.title} — Case Study`} description={d.summary} image={ogImage} type="article" jsonLd={jsonLd}>
   <section class="tool-page project-detail">
     <div class="tool-page__container tool-page__container--wide">
       <nav class="tool-page__breadcrumb" aria-label="Breadcrumb">
