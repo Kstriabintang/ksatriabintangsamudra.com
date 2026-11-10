@@ -1,4 +1,4 @@
-# ksatriabintangsamudra.com — Ksatria Bintang Samudra (AI Engineer)
+# ksatriabintangsamudra.com — Ksatria Bintang Samudra (Product Engineer — Mining & Vertical SaaS)
 # Everything public is open to search engines and AI search assistants.
 
 User-agent: *
