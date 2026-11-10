@@ -1,0 +1,83 @@
+---
+// A small, framed screenshot gallery for a case study — a closer look at specific
+// moments of the product (checkout, receipt, invoice). Renders nothing without items.
+interface Item {
+  src: string;
+  alt: string;
+  caption: string;
+}
+interface Props {
+  title: string;
+  lead?: string;
+  items: Item[];
+}
+const { title, lead, items } = Astro.props;
+---
+
+{
+  items.length > 0 && (
+    <section class="case-gallery" aria-label={title}>
+      <h2 class="project-detail__section-heading">{title}</h2>
+      {lead && <p class="case-gallery__lead">{lead}</p>}
+      <div class="case-gallery__grid">
+        {items.map((it) => (
+          <figure class="case-gallery__item">
+            <div class="case-gallery__frame">
+              <img src={it.src} alt={it.alt} loading="lazy" decoding="async" />
+            </div>
+            <figcaption class="case-gallery__caption">{it.caption}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .case-gallery {
+    margin-block: clamp(2.5rem, 6vw, 4rem);
+  }
+  .case-gallery__lead {
+    margin: 0.35rem 0 1.5rem;
+    color: var(--muted, #9aa4b8);
+    font-size: 0.975rem;
+  }
+  .case-gallery__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1.25rem, 3vw, 2rem);
+    align-items: start;
+  }
+  @media (min-width: 720px) {
+    .case-gallery__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  .case-gallery__item {
+    margin: 0;
+  }
+  .case-gallery__frame {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgb(255 255 255 / 0.1);
+    background:
+      radial-gradient(60% 50% at 50% 0%, rgb(2 170 176 / 0.1), transparent 70%),
+      rgb(255 255 255 / 0.02);
+    box-shadow: 0 24px 60px -30px rgb(0 0 0 / 0.75);
+    padding: clamp(0.75rem, 2vw, 1.25rem);
+    display: grid;
+    place-items: center;
+  }
+  .case-gallery__frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  .case-gallery__caption {
+    margin-top: 0.85rem;
+    color: var(--muted, #9aa4b8);
+    font-size: 0.925rem;
+    line-height: 1.5;
+  }
+</style>

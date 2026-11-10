@@ -3,6 +3,7 @@ import '../../styles/pages/_projects.scss';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Icon from '../../components/ui/Icon.astro';
 import DeviceShowcase from '../../components/projects/DeviceShowcase.astro';
+import CaseGallery from '../../components/projects/CaseGallery.astro';
 import {
   getProjects,
   categoryShort,
@@ -57,6 +58,26 @@ const SHOTS: Record<string, string> = {
   venmail: 'venmail.my.id',
   luxafoir: 'luxafoir.ksatriabintangsamudra.com',
 };
+type GalleryItem = { src: string; alt: string; caption: string };
+const GALLERIES: Record<string, { title: string; lead: string; items: GalleryItem[] }> = {
+  'varo-store': {
+    title: 'A closer look',
+    lead: 'The buyer pays, and the receipt proves it — two moments from the live checkout.',
+    items: [
+      {
+        src: '/images/shots/varo-store/gallery-pay.jpg',
+        alt: 'Varo Store payment method chooser showing QRIS, e-wallet and virtual-account fees',
+        caption: 'The buyer picks a channel and sees its fee up front — QRIS, e-wallet or bank virtual account — so the gateway cost is never a surprise on the bill.',
+      },
+      {
+        src: '/images/shots/varo-store/gallery-invoice.jpg',
+        alt: 'Branded Varo Store email receipt for a PLN electricity token purchase',
+        caption: 'Every paid order sends a branded HTML receipt: the product, the token or serial, the fee and the total, with a link back to track the order.',
+      },
+    ],
+  },
+};
+const gallery = GALLERIES[project.id];
 const showcaseHost = SHOTS[project.id];
 const url = new URL(`/projects/${project.id}/`, site.url).toString();
 const liveUrl = d.links.live ?? d.links.demo ?? null;
@@ -168,6 +189,8 @@ const jsonLd = [
       </section>
 
       {showcaseHost && <DeviceShowcase slug={project.id} title={d.title} host={showcaseHost} />}
+
+      {gallery && <CaseGallery title={gallery.title} lead={gallery.lead} items={gallery.items} />}
 
       <section class={`project-detail__case project-detail__case--${mod}`}>
         <h2 class="project-detail__section-heading">Case Study</h2>
