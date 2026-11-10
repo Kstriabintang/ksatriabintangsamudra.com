@@ -1,0 +1,103 @@
+---
+title: Varo Store
+summary: A production PPOB and game top-up store for a village in Riau — an online shop and a tablet point-of-sale running on one Laravel + Vue system, with a 5,900-product catalogue, buyer-pays payment rails, a hash-chained audit trail and automatic supplier failover.
+category: web
+metric: Live store + tablet kasir
+tags: [Laravel, Vue 3, Point of Sale, Payments, TypeScript]
+cover:
+  gradient: ['#2a1a2f', '#e9b444']
+  icon: store
+links:
+  live: https://varostore.com
+status: Live · in active development
+year: 2026
+metrics:
+  - label: Catalogue products
+    value: 5900
+    suffix: '+'
+  - label: Backend tests
+    value: 1849
+  - label: Payment channels
+    value: 12
+stack: [Laravel 13, Vue 3, TypeScript, Tailwind CSS 4, MySQL, PHP 8.5]
+featured: true
+order: 1
+---
+
+## The Challenge
+
+In Kempas, Indragiri Hilir — a district in Riau — phone credit, electricity
+tokens, e-wallet top-ups and game diamonds are bought the old way: you walk up to
+a counter, say a number, and pay cash. Monthly bills (electricity, water, health
+insurance, motorbike instalments) usually mean a trip into town. I set out to put
+all of that into one system that serves two very different customers at once: a
+buyer on their phone who wants to pay and leave, and a cashier at a busy counter
+who needs to ring up a SIM card, a pulsa top-up and a bill on one receipt without
+thinking about it.
+
+The hard part was never the shop front. It was money and trust. Every order moves
+real rupiah through an outside supplier and a payment gateway, and a single
+mistake — a double charge, a top-up to the wrong number, a bill paid twice — is
+money out of the owner's pocket. The system had to be fast enough for a counter
+and careful enough to never lose track of a single transaction.
+
+## My Approach
+
+I built Varo Store as one Laravel backend with two front ends on the same Vue 3
+codebase: a public storefront and a tablet point-of-sale. Both read from one
+catalogue and one pricing engine, so a price or a cut-off time is defined once and
+is true everywhere.
+
+Reliability came first. Each digital product can carry a **backup supplier**, and a
+health monitor scores every supplier from the last seven days of orders — how often
+it succeeds, how long it takes, whether it is rejecting orders or holding them
+pending. When a supplier goes slow or starts failing, the system **fails over to the
+backup automatically** and quietly stops offering the bad one, so a buyer never sees
+a product that cannot actually be delivered. Pricing is deliberately thin and rule
+driven: a small fixed margin per category, with the payment-gateway fee passed on to
+the buyer, the way the big players do it.
+
+The money path is defensive by design. Orders are idempotent, so a lost response is
+retried without ever charging twice. Bill payments are checked against the biller
+first and paid with the exact reference the check returned. Every state change —
+payment confirmed, order sent, supplier answered, refund issued, cash drawer opened
+— is written to a **hash-chained audit trail**, so the owner can reconstruct exactly
+what happened to any rupiah, and tampering shows up as a broken chain.
+
+## The Design
+
+The storefront is operator-first and phone-first. A buyer picks a category, types a
+number, picks an amount and pays — no account, no login. Games show their official
+artwork on cover cards; numbers are read back in large grouped digits before any
+money moves, because a top-up sent to the wrong number cannot be pulled back. After
+paying, the buyer gets a receipt-style order page they can track, download as an
+image and share, plus an emailed HTML receipt.
+
+The tablet kasir is built for speed at a counter. One cart takes several digital
+products and physical goods together, paid once — cash, the store's QRIS or bank
+transfer — and prints a 58 mm or 80 mm thermal receipt. The cashier sees elapsed
+time while a supplier works, and plain instructions for what to do if one fails. The
+owner runs everything from a web panel and a Telegram bot: every order, the cash in
+the drawer, the stock on the shelf, and an alert the moment a supplier starts
+misbehaving.
+
+## Reliability & Correctness
+
+The catalogue holds **5,900+ products** across phone credit, data, e-wallets, games
+with official art, electricity, and dozens of bill providers — water utilities for
+hundreds of regions, property tax, multifinance instalments, pay-TV and more. Behind
+it sits a backend covered by **1,849 automated tests** that pin down the parts that
+touch money: idempotent ordering, the bill check-and-pay handshake, supplier
+failover, the cash drawer, refunds, and the audit chain. Payments run across **12
+channels** — QRIS, two e-wallets and nine bank virtual accounts — each with its fee
+shown to the buyer up front.
+
+## The Results
+
+Varo Store is live at [varostore.com](https://varostore.com), serving a real store
+and real customers. It replaces a cash-only counter with a system that sells online
+and in person from one catalogue, keeps thin and honest margins, and never loses
+track of a transaction. It is the system I reach for when I want to show what
+production looks like under my hand: not a demo, but money, stock and trust held
+together by tests and an audit trail. Source code is private; the running product
+is the proof.
