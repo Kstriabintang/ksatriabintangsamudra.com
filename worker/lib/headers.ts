@@ -40,6 +40,8 @@ export function withHeaders(response: Response, pathname: string): Response {
   for (const [k, v] of Object.entries(SECURITY)) res.headers.set(k, v);
   const cache = cacheControlFor(pathname);
   if (cache) res.headers.set('Cache-Control', cache);
+  // CTF challenge artifacts are for players, not for search results.
+  if (pathname.startsWith('/ctf/')) res.headers.set('X-Robots-Tag', 'noindex');
   return res;
 }
 

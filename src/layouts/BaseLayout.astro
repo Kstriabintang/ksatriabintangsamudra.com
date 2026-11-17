@@ -105,7 +105,7 @@ const ldBlocks = [personLd, orgLd, websiteLd, ...(jsonLd ? (Array.isArray(jsonLd
     <meta name="p:domain_verify" content="d5cc00349911b6d9d875809fe307774b" />
     <meta name="theme-color" content="#02aab0" />
     <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'} />
-    <link rel="canonical" href={canonical} />
+    {!noindex && <link rel="canonical" href={canonical} />}
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />

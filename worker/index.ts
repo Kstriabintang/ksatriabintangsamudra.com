@@ -216,12 +216,20 @@ const routes: Record<string, Handler> = {
   '/api/chat': chat,
 };
 
-/** Retired URLs and where they live now (the old CV, the React-era sitemap). */
+/** Retired URLs and where they live now (the old CV, the React-era sitemap, renamed case studies). */
 const retired: Record<string, string> = {
   '/cv/ksatria-cv-ai-engineer.pdf': '/cv/ksatria-bintang-samudra-resume.pdf',
   '/cv/ksatria-cv-ai-engineer.html': '/cv/ksatria-bintang-samudra-resume.pdf',
   '/sitemap.xml': '/sitemap-index.xml',
+  '/projects/inspobase/': '/projects/loupe/',
+  '/projects/cendekia/': '/projects/cendekia-siakad/',
 };
+
+/** Pages removed on purpose: answer 410 so search engines drop them instead of retrying a 404. */
+const gone = new Set(['/projects/sumopod/']);
+
+/** Look a path up with and without its trailing slash. */
+const withSlash = (path: string) => (path.endsWith('/') ? path : `${path}/`);
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
@@ -234,7 +242,7 @@ export default {
     }
 
     // Retired URLs → their current home, checked before assets so a stale copy is never served.
-    const moved = retired[url.pathname];
+    const moved = retired[url.pathname] ?? retired[withSlash(url.pathname)];
     if (moved) return Response.redirect(new URL(moved, url.origin).toString(), 301);
 
     if (url.pathname.startsWith('/api/')) {
@@ -253,6 +261,19 @@ export default {
     }
 
     const asset = await env.ASSETS.fetch(request);
+
+    // Removed on purpose: same 404 page body, status 410 Gone.
+    if (gone.has(withSlash(url.pathname)) && asset.status === 404) {
+      return withHeaders(new Response(asset.body, { status: 410, headers: asset.headers }), url.pathname);
+    }
+
+    // The assets layer adds the trailing slash (/about → /about/) with a temporary 307.
+    // These moves are permanent, so answer 301 and let search engines consolidate on the slash URL.
+    if (asset.status === 307) {
+      const location = asset.headers.get('Location');
+      if (location) return withHeaders(Response.redirect(new URL(location, url.origin).toString(), 301), url.pathname);
+    }
+
     return withHeaders(asset, url.pathname);
   },
 };
